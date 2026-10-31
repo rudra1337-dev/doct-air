@@ -16,9 +16,10 @@ export const CLIENT_URL = process.env.CLIENT_URL || 'http://localhost:5173';
 export const COOKIE_NAME = 'doctair_token';
 export const COOKIE_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000; // 7 days in milliseconds
 
-// Gemini AI Configuration
+// AI / Gemini Model Configuration
 export const GEMINI_API_KEY = process.env.GEMINI_API_KEY || '';
-export const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-2.5-flash';
+export const GEMINI_MODEL = process.env.GEMINI_MODEL || process.env.AI_MODEL || 'gemma-4-26b-a4b-it';
+export const AI_MODEL = process.env.AI_MODEL || process.env.GEMINI_MODEL || 'gemma-4-26b-a4b-it';
 export const GEMINI_TEMPERATURE = process.env.GEMINI_TEMPERATURE
   ? parseFloat(process.env.GEMINI_TEMPERATURE)
   : 0.3;
