@@ -80,7 +80,7 @@ export default function PatientDashboard() {
         <div className="flex items-center gap-2.5">
           <span className="text-lg">⚠️</span>
           <span className="leading-relaxed">
-            <strong className="font-bold">Emergency Advisory:</strong> DoctAir is an AI-assisted intake coordination tool and does NOT provide emergency medical diagnosis or treatment. For acute chest pain, severe breathlessness, or immediate medical emergencies, call <strong className="font-bold">112 / 911</strong> or visit your nearest emergency room immediately.
+            <strong className="font-bold">Emergency Advisory:</strong> DoctAir is an AI-assisted intake coordination tool and does NOT provide emergency medical diagnosis or treatment. For acute chest pain, severe breathlessness, or immediate medical emergencies, call <strong className="font-bold">112</strong> or visit your nearest emergency room immediately.
           </span>
         </div>
         <Link to="/safety" className="font-semibold text-amber-800 underline whitespace-nowrap hover:text-amber-950">

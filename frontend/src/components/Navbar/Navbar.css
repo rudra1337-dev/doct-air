@@ -255,6 +255,9 @@
 .navbar__mobile-menu--open {
   max-height: calc(100vh - 68px);
   overflow-y: auto;
+  overscroll-behavior-y: contain;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
   padding: 1.25rem 1.5rem 2rem;
 }
 

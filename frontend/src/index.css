@@ -52,7 +52,16 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
   color-scheme: light;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.5) transparent;
+  overflow-x: hidden;
+}
+
+html.dark {
+  color-scheme: dark;
+  scrollbar-color: rgba(100, 116, 139, 0.5) transparent;
 }
 
 body {
@@ -68,22 +77,83 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 
-/* Accessible & Clean Light Scrollbar */
+/* Universal Smooth Floating Pill WebKit Scrollbars */
 ::-webkit-scrollbar {
   width: 7px;
   height: 7px;
 }
+
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 4px;
+  background-color: rgba(148, 163, 184, 0.45);
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  transition: background-color 0.2s ease;
 }
+
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background-color: rgba(100, 116, 139, 0.7);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background-color: #0d9488;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Scrollbar Utility Classes */
+.no-scrollbar,
+.scrollbar-none {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.no-scrollbar::-webkit-scrollbar,
+.scrollbar-none::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+.scrollbar-thin {
+  scrollbar-width: thin;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: rgba(148, 163, 184, 0.4);
+  border-radius: 9999px;
+  border: 1px solid transparent;
+  background-clip: padding-box;
+}
+
+.dark .scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: rgba(100, 116, 139, 0.45);
+}
+
+.overscroll-contain {
+  overscroll-behavior: contain;
+}
+
+.overscroll-none {
+  overscroll-behavior: none;
+}
+
+.touch-scroll {
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Selection */
@@ -468,15 +538,21 @@ html.dark body {
 }
 
 .dark ::-webkit-scrollbar-track {
-  background: #0f172a;
+  background: transparent;
 }
 
 .dark ::-webkit-scrollbar-thumb {
-  background: #334155;
+  background-color: rgba(100, 116, 139, 0.45);
+  border: 2px solid transparent;
+  background-clip: padding-box;
 }
 
 .dark ::-webkit-scrollbar-thumb:hover {
-  background: #475569;
+  background-color: rgba(148, 163, 184, 0.65);
+}
+
+.dark ::-webkit-scrollbar-thumb:active {
+  background-color: #14b8a6;
 }
 
 .dark ::selection {

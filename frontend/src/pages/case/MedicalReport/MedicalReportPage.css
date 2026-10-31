@@ -948,6 +948,13 @@
   border-bottom: 1px solid #e2e8f0;
   margin-bottom: 1.5rem;
   overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.report-tab-nav::-webkit-scrollbar {
+  display: none;
 }
 
 .report-tab-btn {
@@ -1016,6 +1023,9 @@
   border: 1px solid #e2e8f0;
   margin-top: 0.75rem;
   background: #ffffff;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
 }
 
 .doctor-rx-table {

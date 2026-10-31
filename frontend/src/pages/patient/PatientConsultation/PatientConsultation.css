@@ -116,6 +116,9 @@
   padding: 0.75rem 0.6rem;
   display: flex;
   flex-direction: column;
+  overscroll-behavior-y: contain;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
 }
 
 .chat-sidebar__label {
@@ -404,6 +407,55 @@
   flex-direction: column;
   width: 100%;
   min-height: 0;
+  overscroll-behavior-y: contain;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+  position: relative;
+}
+
+.chat-scroll-bottom-btn {
+  position: sticky;
+  bottom: 0.85rem;
+  margin: 0 auto;
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 1rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #0f766e;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid #ccfbf1;
+  border-radius: 9999px;
+  box-shadow: 0 4px 14px rgba(13, 148, 136, 0.18), 0 2px 6px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  z-index: 30;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: fadeInUp 0.25s ease both;
+}
+
+.chat-scroll-bottom-btn:hover {
+  transform: translateY(-2px);
+  background: #ffffff;
+  color: #0d9488;
+  border-color: #99f6e4;
+  box-shadow: 0 6px 20px rgba(13, 148, 136, 0.25);
+}
+
+.dark .chat-scroll-bottom-btn {
+  background: rgba(30, 41, 59, 0.95);
+  border-color: rgba(20, 184, 166, 0.4);
+  color: #2dd4bf;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.dark .chat-scroll-bottom-btn:hover {
+  background: #1e293b;
+  color: #5eead4;
 }
 
 .chat-messages__inner {
@@ -911,6 +963,9 @@
   flex: 1 1 0%;
   overflow-y: auto;
   overflow-x: hidden;
+  overscroll-behavior-y: contain;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
   display: flex;
   flex-direction: column;
   padding: 2rem 1.5rem 1rem;
@@ -1098,12 +1153,21 @@
   border: none;
   outline: none;
   resize: none;
-  color: #f8fafc;
+  color: #0f172a;
   font-size: 0.935rem;
   line-height: 1.5;
   font-family: inherit;
   max-height: 140px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior-y: contain;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
   padding: 0.25rem 0;
+}
+
+.dark .chat-textarea {
+  color: #f8fafc;
 }
 
 .chat-textarea::placeholder {

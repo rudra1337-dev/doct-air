@@ -46,7 +46,7 @@ export default function ChatWelcome({ patientName = '', onSelectPrompt }) {
             </svg>
           </div>
           <div className="emergency-text">
-            <strong>Emergency Notice:</strong> If you are experiencing chest pain, difficulty breathing, sudden weakness, or an emergency, call <strong>911</strong> or visit the nearest ER immediately.
+            <strong>Emergency Notice:</strong> If you are experiencing chest pain, difficulty breathing, sudden weakness, or an emergency, call <strong>112</strong> or visit the nearest ER immediately.
           </div>
         </div>
 

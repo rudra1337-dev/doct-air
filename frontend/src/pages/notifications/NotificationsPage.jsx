@@ -166,7 +166,7 @@ export default function NotificationsPage() {
       </div>
 
       {/* Filter Tabs */}
-      <div className="flex border-b border-slate-200 dark:border-slate-800 mb-6 space-x-2">
+      <div className="flex border-b border-slate-200 dark:border-slate-800 mb-6 space-x-2 overflow-x-auto no-scrollbar touch-scroll overscroll-contain">
         <button
           type="button"
           onClick={() => setActiveTab('all')}

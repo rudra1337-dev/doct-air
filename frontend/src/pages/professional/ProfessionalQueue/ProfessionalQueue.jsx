@@ -87,7 +87,7 @@ export default function ProfessionalQueue() {
         </div>
 
         {/* Priority Tabs */}
-        <div className="flex items-center gap-1 overflow-x-auto pb-1 md:pb-0">
+        <div className="flex items-center gap-1 overflow-x-auto pb-1 md:pb-0 no-scrollbar touch-scroll overscroll-contain">
           {[
             { id: "all", label: "All Priorities" },
             { id: "URGENT", label: "Urgent" },

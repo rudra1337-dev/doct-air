@@ -263,7 +263,7 @@ export const seedDemoScenarios = async () => {
   const m3_2 = await Message.create({
     conversationId: conv3._id,
     role: 'assistant',
-    content: '⚠️ **IMMEDIATE ATTENTION RECOMMENDED**: Based on the symptoms described ("crushing chest pain radiating down left arm"), this is a critical medical emergency. Please call emergency services (911 / 112) or go to the nearest emergency room immediately.\n\nDo not drive yourself. Sit down in a comfortable position and seek emergency assistance right away.',
+    content: '⚠️ **IMMEDIATE ATTENTION RECOMMENDED**: Based on the symptoms described ("crushing chest pain radiating down left arm"), this is a critical medical emergency. Please call emergency services (112) or go to the nearest emergency room immediately.\n\nDo not drive yourself. Sit down in a comfortable position and seek emergency assistance right away.',
     createdAt: new Date(Date.now() - 1750000),
   });
 
