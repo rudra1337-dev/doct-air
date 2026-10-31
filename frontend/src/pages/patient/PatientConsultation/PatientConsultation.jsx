@@ -18,6 +18,21 @@ import useSpeechSynthesis from '../../../hooks/useSpeechSynthesis';
 import useDraftAttachments from './hooks/useDraftAttachments';
 import './PatientConsultation.css';
 
+const EMERGENCY_KEYWORDS = [
+  'chest pain',
+  'heart attack',
+  'cannot breathe',
+  "can't breathe",
+  'difficulty breathing',
+  'shortness of breath',
+  'loss of consciousness',
+  'unconscious',
+  'severe bleeding',
+  'coughing blood',
+  'stroke',
+  'anaphylaxis',
+];
+
 export default function PatientConsultation() {
   const { conversationId } = useParams();
   const navigate = useNavigate();
@@ -40,6 +55,7 @@ export default function PatientConsultation() {
   const [isStreaming, setIsStreaming] = useState(false);
   const [input, setInput] = useState('');
   const [followUpInfo, setFollowUpInfo] = useState(null);
+  const [activeCase, setActiveCase] = useState(null);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const [desktopSidebarOpen, setDesktopSidebarOpen] = useState(true);
   const [lastFailedPrompt, setLastFailedPrompt] = useState('');
@@ -110,6 +126,8 @@ export default function PatientConsultation() {
 
   // Active conversation object from list
   const activeConv = conversations.find((c) => c.id === conversationId);
+  const isEmergencyCase = Boolean(activeCase?.triage?.isEmergencyOverride || activeCase?.status === 'escalated');
+  const inputEmergencyDetected = EMERGENCY_KEYWORDS.some((k) => input.toLowerCase().includes(k));
 
   // 1. Fetch conversations belonging to authenticated user
   const loadConversations = useCallback(async () => {
@@ -220,6 +238,13 @@ export default function PatientConsultation() {
           caseService.getFollowUpStatus(conversationId).then((fuRes) => {
             if (!isCancelled && fuRes?.success) {
               setFollowUpInfo(fuRes);
+            }
+          }).catch(() => {});
+
+          // Load structured case to check triage priority and emergency escalation
+          caseService.getCaseByConversation(conversationId).then((cRes) => {
+            if (!isCancelled && cRes?.success && cRes.case) {
+              setActiveCase(cRes.case);
             }
           }).catch(() => {});
         }
@@ -525,6 +550,13 @@ export default function PatientConsultation() {
                 setFollowUpInfo(fuRes);
               }
             }).catch(() => {});
+
+            // Refresh structured case and triage status
+            caseService.getCaseByConversation(targetConvId).then((cRes) => {
+              if (cRes?.success && cRes.case) {
+                setActiveCase(cRes.case);
+              }
+            }).catch(() => {});
           }
         },
         onError: (_data) => {
@@ -660,6 +692,24 @@ export default function PatientConsultation() {
               </Link>
             )}
 
+            {/* Finish Intake / Complete & Consent Action */}
+            {conversationId && (
+              <Link
+                to={`/patient/consultation/${conversationId}/report`}
+                className={`text-xs px-3 py-1.5 rounded-lg font-semibold flex items-center gap-1.5 transition-colors ${
+                  followUpInfo?.completeness?.canSubmitForReview
+                    ? 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm'
+                    : 'bg-sky-600 hover:bg-sky-500 text-white'
+                }`}
+                title="Finish consultation intake and open report to provide consent"
+              >
+                <span>
+                  {followUpInfo?.completeness?.canSubmitForReview ? '✓ Finish & Consent' : 'Finish Intake'}
+                </span>
+                <span>&rarr;</span>
+              </Link>
+            )}
+
             {/* Intake Completeness Badge */}
             {followUpInfo?.completeness && (
               <div
@@ -685,6 +735,24 @@ export default function PatientConsultation() {
             </div>
           </div>
         </header>
+
+        {/* Emergency Escalation Banner */}
+        {isEmergencyCase && (
+          <div className="mx-4 my-2 p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-900 text-xs flex items-center justify-between gap-3 shadow-sm">
+            <div className="flex items-center gap-2.5">
+              <span className="text-xl">🚨</span>
+              <div>
+                <strong className="text-rose-900 font-bold block">URGENT EMERGENCY WARNING</strong>
+                <span className="text-rose-800">
+                  Acute clinical red flags have been detected. DoctAir does not provide emergency medical diagnosis or treatment. If you are experiencing severe chest pain, acute shortness of breath, or an immediate emergency, call <strong>112 / 911</strong> or visit the nearest emergency room immediately.
+                </span>
+              </div>
+            </div>
+            <Link to="/safety" className="underline whitespace-nowrap font-semibold text-rose-700 hover:text-rose-900">
+              Emergency Protocols
+            </Link>
+          </div>
+        )}
 
         {/* Message Area or Welcome Screen */}
         {showWelcome ? (
@@ -717,6 +785,16 @@ export default function PatientConsultation() {
             <span className="chat-active-followup-banner__tag">Awaiting Clarification</span>
             <span className="chat-active-followup-banner__text">
               {followUpInfo.activeQuestion.questionText}
+            </span>
+          </div>
+        )}
+
+        {/* Real-Time Keyword Emergency Warning */}
+        {inputEmergencyDetected && (
+          <div className="mx-4 mb-2 p-2.5 rounded-lg bg-rose-50 border border-rose-300 text-rose-900 text-xs flex items-center gap-2 shadow-sm">
+            <span>⚠️</span>
+            <span>
+              <strong className="font-bold text-rose-950">Emergency Advisory:</strong> Possible emergency symptoms detected in your text. If you are in distress, dial <strong className="font-bold">112 / 911</strong> or go to an emergency room now.
             </span>
           </div>
         )}

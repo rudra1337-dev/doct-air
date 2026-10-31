@@ -6,6 +6,8 @@ import * as attachmentService from '../attachment/attachment.service.js';
 import { buildDocumentContext } from './documentContext.builder.js';
 import { CONVERSATION_HISTORY_LIMIT } from '../../config/env.js';
 import { extractAndMergeCaseForConversation } from '../case/case.extraction.service.js';
+import { detectEmergencyRedFlagsInText } from '../case/case.triage.service.js';
+import Case from '../case/models/Case.js';
 
 
 /**
@@ -197,6 +199,28 @@ export const streamUserMessageWithAI = async ({
     userMessage.createdAt || new Date()
   );
 
+  // 3b. Emergency red flag detection: immediately elevate triage priority if life-safety symptoms appear
+  const emergencyCheck = detectEmergencyRedFlagsInText(content || '');
+  if (emergencyCheck.hasEmergency) {
+    try {
+      await Case.findOneAndUpdate(
+        { conversationId },
+        {
+          'triage.priority': 'URGENT',
+          'triage.isEmergencyOverride': true,
+          $addToSet: {
+            'triage.signals': `Emergency indicator: "${emergencyCheck.matchedPattern}"`,
+            'triage.safetyWarnings':
+              'EMERGENCY WARNING: Critical symptom reported in conversation. Advise immediate professional evaluation without delay.',
+          },
+          status: 'escalated',
+        }
+      );
+    } catch {
+      // Non-blocking if case is not yet initialized
+    }
+  }
+
   // Notify message_start
   const safeUserMessage = userMessage.toJSON ? userMessage.toJSON() : userMessage;
   if (onMessageStart) {
@@ -267,11 +291,19 @@ export const streamUserMessageWithAI = async ({
       throw new Error('Gemini returned an empty response.');
     }
 
+    let finalAssistantText = fullAssistantText.trim();
+    if (
+      emergencyCheck.hasEmergency &&
+      !finalAssistantText.toLowerCase().includes('emergency')
+    ) {
+      finalAssistantText = `⚠️ **IMMEDIATE ATTENTION RECOMMENDED**: Based on the symptoms described ("${emergencyCheck.matchedPattern}"), this may be a medical emergency. Please do not wait in a queue — contact emergency services (911/112) or proceed to the nearest emergency facility immediately.\n\n${finalAssistantText}`;
+    }
+
     // 6. Persist completed assistant message only after successful stream completion
     const assistantMessage = await conversationRepo.createMessage({
       conversationId,
       role: 'assistant',
-      content: fullAssistantText.trim(),
+      content: finalAssistantText,
       inputMode: 'text',
       status: 'completed',
     });

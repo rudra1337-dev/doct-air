@@ -5,6 +5,8 @@ export default function CaseFindingsCard({
   caseData,
   onViewDocument,
   conversationDocuments = [],
+  isClinician = false,
+  onVerifyFact,
 }) {
   const findings = Array.isArray(caseData?.reportFindings) ? caseData.reportFindings : [];
 
@@ -65,11 +67,26 @@ export default function CaseFindingsCard({
                     </span>
                     <h4 className="case-finding-title">{item.title}</h4>
                   </div>
-                  <SourceAttributionBadge
-                    source={item.source}
-                    documentTitle={docName}
-                    onViewDocument={onViewDocument}
-                  />
+                  <div className="flex items-center gap-2 flex-wrap">
+                    {item.verifiedByProfessional ? (
+                      <span className="text-[11px] font-medium px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center gap-1">
+                        ✓ Verified by Clinician
+                      </span>
+                    ) : isClinician && onVerifyFact && (item.id || item._id) ? (
+                      <button
+                        type="button"
+                        onClick={() => onVerifyFact('reportFindings', item.id || item._id)}
+                        className="text-[11px] px-2.5 py-0.5 rounded bg-teal-50 hover:bg-teal-100 text-teal-700 border border-teal-200 font-medium transition-colors"
+                      >
+                        Verify Finding
+                      </button>
+                    ) : null}
+                    <SourceAttributionBadge
+                      source={item.source}
+                      documentTitle={docName}
+                      onViewDocument={onViewDocument}
+                    />
+                  </div>
                 </div>
 
                 <div className="case-finding-content">

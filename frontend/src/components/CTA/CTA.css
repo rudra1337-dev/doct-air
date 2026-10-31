@@ -1,7 +1,7 @@
-/* ── CTA ─────────────────────────────────────────── */
+/* ── CTA (Light Healthcare SaaS Theme) ───────────────────────────── */
 .cta {
   padding: 8rem 1.5rem;
-  background: linear-gradient(180deg, #0f1629 0%, #0a0e1a 100%);
+  background: linear-gradient(145deg, #0f766e 0%, #115e59 100%);
   position: relative;
   overflow: hidden;
   text-align: center;
@@ -12,7 +12,7 @@
   width: 800px; height: 400px;
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-  background: radial-gradient(ellipse, rgba(14,165,233,0.1) 0%, transparent 70%);
+  background: radial-gradient(ellipse, rgba(204, 251, 241, 0.15) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -30,13 +30,13 @@
   font-size: clamp(2rem, 4vw, 3rem);
   font-weight: 800;
   letter-spacing: -0.03em;
-  color: #fff;
+  color: #ffffff;
   line-height: 1.15;
 }
 
 .cta__sub {
   font-size: 1.0625rem;
-  color: #64748b;
+  color: #ccfbf1;
   line-height: 1.7;
   max-width: 500px;
 }
@@ -50,9 +50,34 @@
   margin-top: 0.5rem;
 }
 
+.cta__actions .btn-primary {
+  background: #ffffff;
+  color: #0f766e;
+  font-weight: 700;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+.cta__actions .btn-primary:hover {
+  background: #f0fdfa;
+  color: #0d9488;
+  transform: translateY(-2px);
+}
+
+.cta__actions .btn-ghost {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.cta__actions .btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+
 .cta__note {
   font-size: 0.8rem;
-  color: #334155;
+  color: #99f6e4;
   max-width: 480px;
   line-height: 1.6;
 }

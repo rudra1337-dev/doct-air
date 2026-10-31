@@ -1,7 +1,7 @@
-/* ── For Healthcare Teams ──────────────────────── */
+/* ── For Healthcare Teams (Light Healthcare SaaS Theme) ──────────── */
 .for-teams {
   padding: 6rem 1.5rem;
-  background: linear-gradient(180deg, #0a0e1a 0%, #0f1629 100%);
+  background-color: #f8fafc;
 }
 
 .for-teams__container { max-width: 1280px; margin: 0 auto; }
@@ -17,22 +17,22 @@
 
 .for-teams__eyebrow {
   font-size: 0.8rem;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #0ea5e9;
+  color: #0d9488;
 }
 
 .for-teams__heading {
   font-size: clamp(1.75rem, 3vw, 2.5rem);
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: -0.02em;
-  color: #fff;
+  color: #0f172a;
   line-height: 1.2;
 }
 
 .for-teams__body {
-  color: #64748b;
+  color: #475569;
   font-size: 1rem;
   line-height: 1.7;
 }
@@ -48,7 +48,7 @@
   align-items: flex-start;
   gap: 0.75rem;
   font-size: 0.9rem;
-  color: #94a3b8;
+  color: #334155;
   line-height: 1.5;
 }
 .for-teams__benefit svg { flex-shrink: 0; margin-top: 2px; }
@@ -70,36 +70,38 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.08);
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
   border-radius: 12px;
   padding: 1rem 1.25rem;
   width: 100%;
-  transition: background 0.2s, border-color 0.2s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
 }
 .for-teams__flow-card:hover {
-  background: rgba(14,165,233,0.06);
-  border-color: rgba(14,165,233,0.2);
+  background: #f0fdfa;
+  border-color: #99f6e4;
+  box-shadow: 0 4px 12px rgba(13, 148, 136, 0.08);
 }
 
 .for-teams__flow-dot {
   width: 36px; height: 36px;
-  background: rgba(14,165,233,0.1);
-  border: 1px solid rgba(14,165,233,0.25);
+  background: #f0fdfa;
+  border: 1px solid #ccfbf1;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 0.8rem;
   font-weight: 700;
-  color: #38bdf8;
+  color: #0d9488;
   flex-shrink: 0;
 }
 
 .for-teams__flow-label {
   font-size: 0.9375rem;
-  font-weight: 600;
-  color: #e2e8f0;
+  font-weight: 700;
+  color: #0f172a;
 }
 .for-teams__flow-sub {
   font-size: 0.8rem;

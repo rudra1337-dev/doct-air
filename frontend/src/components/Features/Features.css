@@ -1,7 +1,9 @@
-/* ── Features ──────────────────────────────────── */
+/* ── Features (Light Healthcare SaaS Theme) ──────────────────────── */
 .features {
   padding: 6rem 1.5rem;
-  background: linear-gradient(180deg, #0f1629 0%, #0a0e1a 100%);
+  background: #ffffff;
+  border-top: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
 }
 
 .features__container { max-width: 1280px; margin: 0 auto; }
@@ -14,18 +16,18 @@
 
 .features__eyebrow {
   font-size: 0.8rem;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #0ea5e9;
+  color: #0d9488;
   margin-bottom: 0.75rem;
 }
 
 .features__heading {
   font-size: clamp(1.75rem, 3vw, 2.5rem);
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: -0.02em;
-  color: #fff;
+  color: #0f172a;
   margin-bottom: 1rem;
 }
 
@@ -42,59 +44,61 @@
 }
 
 .feature-card {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.07);
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
   border-radius: 16px;
   padding: 1.75rem;
   display: flex;
   flex-direction: column;
   gap: 0.875rem;
-  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  transition: background 0.2s, border-color 0.2s, transform 0.2s, box-shadow 0.2s;
   cursor: default;
 }
 .feature-card:hover {
-  background: rgba(255,255,255,0.05);
-  border-color: rgba(255,255,255,0.13);
+  background: #ffffff;
+  border-color: #99f6e4;
   transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(13, 148, 136, 0.08);
 }
 
-.feature-card--purple { border-color: rgba(129,140,248,0.1); }
-.feature-card--purple:hover { border-color: rgba(129,140,248,0.25); }
-.feature-card--green  { border-color: rgba(16,185,129,0.1); }
-.feature-card--green:hover  { border-color: rgba(16,185,129,0.25); }
-.feature-card--amber  { border-color: rgba(245,158,11,0.1); }
-.feature-card--amber:hover  { border-color: rgba(245,158,11,0.25); }
-.feature-card--red    { border-color: rgba(239,68,68,0.1); }
-.feature-card--red:hover    { border-color: rgba(239,68,68,0.25); }
+.feature-card--purple { border-color: #f3e8ff; }
+.feature-card--purple:hover { border-color: #d8b4fe; }
+.feature-card--green  { border-color: #bbf7d0; }
+.feature-card--green:hover  { border-color: #86efac; }
+.feature-card--amber  { border-color: #fde68a; }
+.feature-card--amber:hover  { border-color: #fcd34d; }
+.feature-card--red    { border-color: #fecdd3; }
+.feature-card--red:hover    { border-color: #fda4af; }
 
 .feature-card__icon {
   width: 44px; height: 44px;
-  background: rgba(255,255,255,0.05);
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
 }
 
 .feature-card__title {
-  font-size: 0.9375rem;
-  font-weight: 600;
-  color: #e2e8f0;
-  line-height: 1.3;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0f172a;
 }
 
-.feature-card__body {
+.feature-card__desc {
   font-size: 0.875rem;
   color: #64748b;
   line-height: 1.6;
 }
 
-@media (max-width: 1200px) {
-  .features__grid { grid-template-columns: repeat(3, 1fr); }
-}
-@media (max-width: 840px) {
+@media (max-width: 1024px) {
   .features__grid { grid-template-columns: repeat(2, 1fr); }
 }
-@media (max-width: 480px) {
+
+@media (max-width: 600px) {
   .features__grid { grid-template-columns: 1fr; }
+  .features { padding: 4rem 1.25rem; }
 }

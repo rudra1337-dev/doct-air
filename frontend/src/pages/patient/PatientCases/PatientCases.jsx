@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import caseService from '../../../services/caseService';
 import StatusBadge from '../../case/CaseReview/components/StatusBadge';
+import PriorityBadge from '../../../components/common/PriorityBadge';
 import '../PatientDashboard/PatientDashboard.css';
 
 export default function PatientCases() {
@@ -37,26 +38,26 @@ export default function PatientCases() {
           <span className="workspace-view__eyebrow">Patient Workspace</span>
           <h1 className="workspace-view__title">My Submitted Cases</h1>
         </div>
-        <Link to="/patient/dashboard" className="btn-ghost">
+        <Link to="/patient/dashboard" className="btn-secondary text-xs">
           &larr; Back to Dashboard
         </Link>
       </div>
 
       {isLoading ? (
         <div className="workspace-placeholder-box">
-          <div className="case-spinner" aria-hidden="true" />
-          <h2 className="mt-4">Loading your medical cases...</h2>
+          <div className="w-8 h-8 mx-auto mb-3 border-2 border-teal-600 border-t-transparent rounded-full animate-spin" />
+          <h2 className="mt-2 text-slate-800">Loading your medical cases...</h2>
         </div>
       ) : error ? (
         <div className="workspace-placeholder-box">
-          <h2 className="text-rose-400">Failed to load cases</h2>
-          <p>{error}</p>
+          <h2 className="text-rose-600">Failed to load cases</h2>
+          <p className="text-slate-600">{error}</p>
         </div>
       ) : cases.length === 0 ? (
         <div className="workspace-placeholder-box">
           <div style={{ marginBottom: "1.25rem", display: "inline-block" }}>
             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M9 12h6M9 16h6M9 8h6M5 3h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2z" stroke="#38bdf8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M9 12h6M9 16h6M9 8h6M5 3h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2z" stroke="#0d9488" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </div>
           <h2>No clinical cases on file yet.</h2>
@@ -85,33 +86,50 @@ export default function PatientCases() {
               <div key={caseId} className="workspace-grid__item">
                 <div>
                   <div className="flex items-center justify-between gap-2 mb-3">
-                    <span className="text-xs font-mono text-slate-500">
-                      ID: {caseId.slice(-6)}
-                    </span>
+                    <PriorityBadge
+                      priority={c.triage?.priority}
+                      isEmergency={c.triage?.isEmergencyOverride}
+                    />
                     <StatusBadge status={c.status} />
                   </div>
 
-                  <h3 className="mb-2 text-base font-semibold text-slate-100 line-clamp-2">
+                  <h3 className="mb-1.5 text-base font-bold text-slate-900 line-clamp-2">
                     {chiefText}
                   </h3>
 
-                  <p className="text-xs text-slate-400 mb-4">
+                  <p className="text-xs text-slate-500 mb-4">
                     {c.symptoms?.length || 0} Symptoms &bull; {c.reportFindings?.length || 0} Report Findings
                     {updatedDate && ` &bull; Updated ${updatedDate}`}
                   </p>
                 </div>
 
-                <div className="flex items-center gap-2 pt-2 border-t border-slate-800">
+                <div className="flex items-center gap-2 pt-3 border-t border-slate-100 flex-wrap">
+                  {c.status === 'reviewed' ? (
+                    <Link
+                      to={`/patient/cases/${caseId}/report`}
+                      className="text-xs py-2 px-3 flex-1 text-center font-semibold rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white transition-colors shadow-sm"
+                    >
+                      ✓ Doctor Report &rarr;
+                    </Link>
+                  ) : (
+                    <Link
+                      to={`/patient/cases/${caseId}/report`}
+                      className="text-xs py-2 px-3 flex-1 text-center font-semibold rounded-lg bg-teal-600 hover:bg-teal-700 text-white transition-colors shadow-sm"
+                    >
+                      Intake Report &rarr;
+                    </Link>
+                  )}
                   <Link
                     to={`/patient/cases/${caseId}`}
-                    className="btn-primary text-xs py-2 px-3 flex-1 text-center"
+                    className="btn-secondary text-xs py-1.5 px-3"
+                    title="Case details"
                   >
-                    Review Case &rarr;
+                    Case
                   </Link>
                   {convId && (
                     <Link
                       to={`/patient/consultation/${convId}`}
-                      className="btn-ghost text-xs py-2 px-3"
+                      className="btn-ghost text-xs py-1.5 px-2.5"
                       title="Open Consultation Chat"
                     >
                       Chat

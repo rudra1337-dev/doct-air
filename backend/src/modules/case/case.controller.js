@@ -193,12 +193,14 @@ export const extractDocumentCaseHandler = asyncHandler(async (req, res) => {
 export const listCasesHandler = asyncHandler(async (req, res) => {
   const userId = req.user._id || req.user.id;
   const userRole = req.user.role;
-  const { status, limit } = req.query;
+  const { status, priority, search, q, limit } = req.query;
 
   const cases = await caseService.listCases({
     userId,
     userRole,
     status,
+    priority,
+    search: search || q,
     limit: limit ? parseInt(limit, 10) : 50,
   });
 
@@ -397,6 +399,186 @@ export const getReportByVersionHandler = asyncHandler(async (req, res) => {
   });
 });
 
+/**
+ * @route   POST /api/cases/:id/consent-and-submit
+ * @desc    Patient provides explicit consent and submits case to prioritized queue
+ * @access  Private (Patient owner)
+ */
+export const consentAndSubmitCaseHandler = asyncHandler(async (req, res) => {
+  const userId = req.user._id || req.user.id;
+  const userRole = req.user.role;
+  const { id: caseId } = req.params;
+  const { statement } = req.body;
+
+  const updatedCase = await caseService.consentAndSubmitCase({
+    caseId,
+    userId,
+    userRole,
+    statement,
+    req,
+  });
+
+  const jsonCase = updatedCase?.toJSON ? updatedCase.toJSON() : { ...updatedCase };
+  jsonCase.completeness = caseService.evaluateCaseCompleteness(updatedCase);
+
+  res.status(200).json({
+    success: true,
+    case: jsonCase,
+    message: 'Medical intake report consented and submitted to clinical review queue.',
+  });
+});
+
+/**
+ * @route   PATCH /api/cases/:id/priority
+ * @desc    Professional overrides case priority with documented clinical rationale
+ * @access  Private (Clinician or Admin)
+ */
+export const overridePriorityHandler = asyncHandler(async (req, res) => {
+  const professionalId = req.user._id || req.user.id;
+  const professionalRole = req.user.role;
+  const { id: caseId } = req.params;
+  const { priority, reason } = req.body;
+
+  const updatedCase = await caseService.overrideCasePriority({
+    caseId,
+    professionalId,
+    professionalRole,
+    priority,
+    reason,
+    req,
+  });
+
+  const jsonCase = updatedCase?.toJSON ? updatedCase.toJSON() : { ...updatedCase };
+  jsonCase.completeness = caseService.evaluateCaseCompleteness(updatedCase);
+
+  res.status(200).json({
+    success: true,
+    case: jsonCase,
+    message: `Case priority successfully updated to ${priority}.`,
+  });
+});
+
+/**
+ * @route   GET /api/cases/stats
+ * @desc    Get aggregated clinical statistics for professional workspace
+ * @access  Private (Clinician or Admin)
+ */
+export const getCaseStatsHandler = asyncHandler(async (_req, res) => {
+  const stats = await caseService.getCaseStats();
+  res.status(200).json({
+    success: true,
+    stats,
+  });
+});
+
+/**
+ * @route   GET /api/cases/:id/assessment
+ * @desc    Get professional assessment for a case
+ * @access  Private (Authorized Patient owner if published; Clinician if draft/published)
+ */
+export const getAssessmentHandler = asyncHandler(async (req, res) => {
+  const userId = req.user._id || req.user.id;
+  const userRole = req.user.role;
+  const { id: caseId } = req.params;
+
+  const assessment = await caseService.getAssessmentByCaseId({
+    caseId,
+    userId,
+    userRole,
+  });
+
+  res.status(200).json({
+    success: true,
+    assessment: assessment || null,
+  });
+});
+
+/**
+ * @route   POST /api/cases/:id/assessment
+ * @desc    Save draft of doctor's clinical assessment
+ * @access  Private (Clinician or Admin)
+ */
+export const saveDraftAssessmentHandler = asyncHandler(async (req, res) => {
+  const professionalId = req.user._id || req.user.id;
+  const professionalName = req.user.name;
+  const userRole = req.user.role;
+  const { id: caseId } = req.params;
+
+  const assessment = await caseService.saveDraftAssessment({
+    caseId,
+    professionalId,
+    professionalName,
+    userRole,
+    assessmentData: req.body,
+    req,
+  });
+
+  res.status(200).json({
+    success: true,
+    assessment,
+    message: 'Clinical assessment draft saved.',
+  });
+});
+
+/**
+ * @route   POST /api/cases/:id/assessment/publish
+ * @desc    Publish final doctor's report with explicit clinician acknowledgement
+ * @access  Private (Clinician or Admin)
+ */
+export const publishAssessmentHandler = asyncHandler(async (req, res) => {
+  const professionalId = req.user._id || req.user.id;
+  const professionalName = req.user.name;
+  const userRole = req.user.role;
+  const { id: caseId } = req.params;
+  const { acknowledgement, assessmentData } = req.body;
+
+  const assessment = await caseService.publishAssessment({
+    caseId,
+    professionalId,
+    professionalName,
+    userRole,
+    acknowledgement,
+    assessmentData,
+    req,
+  });
+
+  res.status(200).json({
+    success: true,
+    assessment,
+    message: 'Final clinical assessment verified and published to patient.',
+  });
+});
+
+/**
+ * @route   POST /api/cases/:id/facts/verify
+ * @desc    Clinician verifies or confirms an extracted fact
+ * @access  Private (Clinician or Admin)
+ */
+export const verifyFactHandler = asyncHandler(async (req, res) => {
+  const professionalId = req.user._id || req.user.id;
+  const userRole = req.user.role;
+  const { id: caseId } = req.params;
+  const { category, factId } = req.body;
+
+  const updatedCase = await caseService.verifyCaseFact({
+    caseId,
+    professionalId,
+    userRole,
+    category,
+    factId,
+    req,
+  });
+
+  const jsonCase = updatedCase?.toJSON ? updatedCase.toJSON() : { ...updatedCase };
+  jsonCase.completeness = caseService.evaluateCaseCompleteness(updatedCase);
+
+  res.status(200).json({
+    success: true,
+    case: jsonCase,
+    message: 'Clinical fact verified.',
+  });
+});
+
 export default {
   createCaseHandler,
   getCaseHandler,
@@ -414,4 +596,11 @@ export default {
   getReportByConversationHandler,
   getReportByCaseHandler,
   getReportByVersionHandler,
+  consentAndSubmitCaseHandler,
+  overridePriorityHandler,
+  getCaseStatsHandler,
+  getAssessmentHandler,
+  saveDraftAssessmentHandler,
+  publishAssessmentHandler,
+  verifyFactHandler,
 };

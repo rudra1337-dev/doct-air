@@ -465,11 +465,99 @@ const caseSchema = new mongoose.Schema(
     status: {
       type: String,
       enum: {
-        values: ['in_progress', 'ready_for_review', 'reviewed'],
+        values: [
+          'in_progress',
+          'ready_for_review',
+          'queued',
+          'in_review',
+          'needs_information',
+          'escalated',
+          'reviewed',
+          'completed',
+          'cancelled',
+        ],
         message: '{VALUE} is not a valid case status',
       },
       default: 'in_progress',
       index: true,
+    },
+
+    // ── Patient Consent Record ─────────────────────────────────────────────
+    consent: {
+      consentGiven: {
+        type: Boolean,
+        default: false,
+      },
+      consentedAt: {
+        type: Date,
+        default: null,
+      },
+      reportVersion: {
+        type: Number,
+        default: 1,
+      },
+      statement: {
+        type: String,
+        trim: true,
+        maxlength: [1000, 'Consent statement cannot exceed 1000 characters'],
+        default: null,
+      },
+      consentedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        default: null,
+      },
+    },
+
+    // ── Advisory Triage & Urgency Stratification ───────────────────────────
+    triage: {
+      priority: {
+        type: String,
+        enum: {
+          values: ['URGENT', 'HIGH', 'NORMAL', 'INCOMPLETE'],
+          message: '{VALUE} is not a valid triage priority',
+        },
+        default: 'INCOMPLETE',
+        index: true,
+      },
+      signals: {
+        type: [String],
+        default: [],
+      },
+      safetyWarnings: {
+        type: [String],
+        default: [],
+      },
+      categoryReason: {
+        type: String,
+        trim: true,
+        maxlength: [1000, 'Triage reason cannot exceed 1000 characters'],
+        default: null,
+      },
+      isEmergencyOverride: {
+        type: Boolean,
+        default: false,
+        index: true,
+      },
+      evaluatedAt: {
+        type: Date,
+        default: null,
+      },
+      overrideBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        default: null,
+      },
+      overrideReason: {
+        type: String,
+        trim: true,
+        maxlength: [500, 'Override reason cannot exceed 500 characters'],
+        default: null,
+      },
+      overrideAt: {
+        type: Date,
+        default: null,
+      },
     },
 
     // ── Structured Clinical Intake Fields ──────────────────────────────────
@@ -639,13 +727,14 @@ const caseSchema = new mongoose.Schema(
 
 // Compound index for querying cases by patient ordered by recent update
 caseSchema.index({ patientId: 1, updatedAt: -1 });
+caseSchema.index({ 'triage.priority': 1, status: 1, updatedAt: -1 });
 
 // Clean JSON serialization consistent with project standards
 caseSchema.set('toJSON', {
   transform: (_doc, ret) => {
     ret.id = ret._id.toString();
-    ret.patientId = ret.patientId.toString();
-    ret.conversationId = ret.conversationId.toString();
+    ret.patientId = ret.patientId?._id ? ret.patientId._id.toString() : ret.patientId?.toString();
+    ret.conversationId = ret.conversationId?._id ? ret.conversationId._id.toString() : ret.conversationId?.toString();
     if (Array.isArray(ret.processedMessageIds)) {
       ret.processedMessageIds = ret.processedMessageIds.map((id) =>
         id ? id.toString() : id

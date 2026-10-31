@@ -10,6 +10,9 @@ import CaseMedicalBackgroundCard from './components/CaseMedicalBackgroundCard';
 import CaseFindingsCard from './components/CaseFindingsCard';
 import CaseDiscrepanciesCard from './components/CaseDiscrepanciesCard';
 import CaseMissingInfoCard from './components/CaseMissingInfoCard';
+import CaseTriageCard from './components/CaseTriageCard';
+import ConversationHistoryModal from './components/ConversationHistoryModal';
+import DoctorAssessmentCard from './components/DoctorAssessmentCard';
 import DocumentPreviewModal from './components/DocumentPreviewModal';
 import EditCaseModal from './components/EditCaseModal';
 import './CaseReviewPage.css';
@@ -18,6 +21,7 @@ export default function CaseReviewPage({ role = 'patient' }) {
   const { caseId, conversationId } = useParams();
   const { user } = useAuth();
   const userRole = user?.role || (role === 'professional' ? 'PROFESSIONAL' : 'PATIENT');
+  const isClinician = userRole === 'PROFESSIONAL' || userRole === 'ADMIN' || role === 'professional';
 
   // Core Case Data States
   const [caseData, setCaseData] = useState(null);
@@ -32,6 +36,9 @@ export default function CaseReviewPage({ role = 'patient' }) {
   const [isSavingEdit, setIsSavingEdit] = useState(false);
   const [editError, setEditError] = useState(null);
   const [notification, setNotification] = useState(null);
+
+  // Conversation Modal State
+  const [isConvModalOpen, setIsConvModalOpen] = useState(false);
 
   // Document Inspection State
   const [selectedDocData, setSelectedDocData] = useState(null);
@@ -144,6 +151,63 @@ export default function CaseReviewPage({ role = 'patient' }) {
     }
   };
 
+  // Priority Override Handler (Clinician)
+  const handleOverridePriority = async (priority, reason) => {
+    if (!caseData?.id && !caseData?._id) return;
+    const targetId = caseData.id || caseData._id;
+
+    try {
+      setIsStatusUpdating(true);
+      const res = await caseService.overridePriority(targetId, priority, reason);
+      if (res?.success && res.case) {
+        setCaseData(res.case);
+        setNotification({
+          type: 'success',
+          message: `Case priority successfully updated to "${priority}".`,
+        });
+      }
+    } catch (err) {
+      setNotification({
+        type: 'error',
+        message: err.message || 'Failed to update priority.',
+      });
+      throw err;
+    } finally {
+      setIsStatusUpdating(false);
+    }
+  };
+
+  // Fact Verification Handler (Clinician)
+  const handleVerifyFact = async (category, factId) => {
+    if (!caseData?.id && !caseData?._id) return;
+    const targetId = caseData.id || caseData._id;
+
+    try {
+      const res = await caseService.verifyFact(targetId, category, factId);
+      if (res?.success && res.case) {
+        setCaseData(res.case);
+        setNotification({
+          type: 'success',
+          message: 'Clinical finding verified.',
+        });
+      }
+    } catch (err) {
+      setNotification({
+        type: 'error',
+        message: err.message || 'Failed to verify finding.',
+      });
+    }
+  };
+
+  // Assessment Published Handler
+  const handleAssessmentPublished = () => {
+    setNotification({
+      type: 'success',
+      message: 'Official Doctor’s Assessment published. Patient has been notified.',
+    });
+    loadCase();
+  };
+
   // Save Edit Handler
   const handleSaveEdit = async (updatePayload) => {
     if (!caseData?.id && !caseData?._id) return;
@@ -215,21 +279,36 @@ export default function CaseReviewPage({ role = 'patient' }) {
           &larr; Back to {role === 'professional' ? 'Reviewed Cases' : 'Workspace'}
         </Link>
 
-        {caseData?.conversationId && (
-          <div className="case-review-page__conv-link">
-            <span>Linked Consultation:</span>
-            <Link
-              to={
-                role === 'professional'
-                  ? `/professional/queue`
-                  : `/patient/consultation/${caseData.conversationId}`
-              }
-              className="case-link-pill"
+        <div className="flex items-center gap-2 flex-wrap">
+          {caseData?.conversationId && (
+            <button
+              type="button"
+              onClick={() => setIsConvModalOpen(true)}
+              className="text-xs px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 text-slate-700 font-semibold border border-slate-200 shadow-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+              title="Inspect original consultation transcript"
             >
-              Consultation #{caseData.conversationId.slice(-6)}
-            </Link>
-          </div>
-        )}
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+              </svg>
+              <span>Consultation Dialog</span>
+            </button>
+          )}
+
+          <Link
+            to={
+              caseData?.conversationId
+                ? `/conversation/${caseData.conversationId}/report`
+                : `/cases/${caseData?.id || caseData?._id}/report`
+            }
+            className="text-xs px-3 py-1.5 rounded-lg bg-teal-50 hover:bg-teal-100 text-teal-700 font-semibold border border-teal-200 shadow-xs flex items-center gap-1.5 transition-colors"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+              <polyline points="14 2 14 8 20 8" />
+            </svg>
+            <span>Medical Intake Report</span>
+          </Link>
+        </div>
       </div>
 
       {/* Global Notification Banner */}
@@ -333,7 +412,22 @@ export default function CaseReviewPage({ role = 'patient' }) {
       {/* ── STATE 4: CASE FOUND & LOADED ── */}
       {!isLoading && !error && caseData && (
         <div className="case-review-layout">
-          {/* Section A: Case Overview */}
+          {/* Section A: Advisory Triage & Urgency Stratification */}
+          <CaseTriageCard
+            triage={caseData.triage}
+            isClinician={isClinician}
+            onOverridePriority={handleOverridePriority}
+            isUpdating={isStatusUpdating}
+          />
+
+          {/* Section B: Doctor's Final Assessment & Report */}
+          <DoctorAssessmentCard
+            caseId={caseData.id || caseData._id}
+            isClinician={isClinician}
+            onAssessmentPublished={handleAssessmentPublished}
+          />
+
+          {/* Section C: Case Overview */}
           <CaseOverviewCard
             caseData={caseData}
             userRole={userRole}
@@ -342,7 +436,7 @@ export default function CaseReviewPage({ role = 'patient' }) {
             onOpenEdit={() => setIsEditModalOpen(true)}
           />
 
-          {/* Section B: Case Completeness & Intake Readiness */}
+          {/* Section D: Case Completeness & Intake Readiness */}
           <CaseCompletenessCard
             completeness={caseData.completeness}
             caseData={caseData}
@@ -350,38 +444,47 @@ export default function CaseReviewPage({ role = 'patient' }) {
             onOpenEdit={() => setIsEditModalOpen(true)}
           />
 
-          {/* Section C: Symptoms & Complaints */}
+          {/* Section E: Symptoms & Complaints */}
           <CaseSymptomsCard
             caseData={caseData}
             onOpenEdit={() => setIsEditModalOpen(true)}
           />
 
-          {/* Section C: Medical Background & Vitals */}
+          {/* Section F: Medical Background & Vitals */}
           <CaseMedicalBackgroundCard
             caseData={caseData}
             onOpenEdit={() => setIsEditModalOpen(true)}
           />
 
-          {/* Section D: Medical Report Findings from PDFs */}
+          {/* Section G: Medical Report Findings from PDFs */}
           <CaseFindingsCard
             caseData={caseData}
             onViewDocument={handleViewDocument}
             conversationDocuments={conversationDocs}
+            isClinician={isClinician}
+            onVerifyFact={handleVerifyFact}
           />
 
-          {/* Section E: Case Discrepancies & Conflicting Assertions */}
+          {/* Section H: Case Discrepancies & Conflicting Assertions */}
           <CaseDiscrepanciesCard
             caseData={caseData}
             onViewDocument={handleViewDocument}
           />
 
-          {/* Section F: Missing Information Tracking */}
+          {/* Section I: Missing Information Tracking */}
           <CaseMissingInfoCard
             caseData={caseData}
             userRole={userRole}
           />
         </div>
       )}
+
+      {/* Consultation History Dialog Modal */}
+      <ConversationHistoryModal
+        conversationId={caseData?.conversationId || conversationId}
+        isOpen={isConvModalOpen}
+        onClose={() => setIsConvModalOpen(false)}
+      />
 
       {/* Document Preview Inspection Modal */}
       {selectedDocData && (

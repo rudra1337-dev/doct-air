@@ -1,10 +1,10 @@
-/* ── PublicLayout ───────────────────────────────────── */
+/* ── PublicLayout (Light Theme) ───────────────────── */
 .public-layout {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: var(--color-surface, #0a0e1a);
-  color: #e2e8f0;
+  background-color: var(--color-surface, #f8fafc);
+  color: #334155;
 }
 
 .public-layout__main {
