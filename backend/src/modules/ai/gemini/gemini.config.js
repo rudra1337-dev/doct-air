@@ -1,6 +1,7 @@
 import {
   GEMINI_API_KEY,
   GEMINI_MODEL,
+  AI_MODEL,
   GEMINI_TEMPERATURE,
   GEMINI_MAX_OUTPUT_TOKENS,
 } from '../../../config/env.js';
@@ -15,7 +16,7 @@ export const getGeminiConfig = (overrides = {}) => {
     apiKey: overrides.apiKey !== undefined
       ? overrides.apiKey
       : (GEMINI_API_KEY || process.env.GEMINI_API_KEY || ''),
-    model: overrides.model || GEMINI_MODEL || process.env.GEMINI_MODEL || 'gemini-2.5-flash',
+    model: overrides.model || GEMINI_MODEL || process.env.GEMINI_MODEL || process.env.AI_MODEL || AI_MODEL || 'gemma-4-26b-a4b-it',
     temperature: overrides.temperature !== undefined
       ? overrides.temperature
       : GEMINI_TEMPERATURE,

@@ -16,6 +16,13 @@ import {
   getReportByConversationHandler,
   getReportByCaseHandler,
   getReportByVersionHandler,
+  consentAndSubmitCaseHandler,
+  overridePriorityHandler,
+  getCaseStatsHandler,
+  getAssessmentHandler,
+  saveDraftAssessmentHandler,
+  publishAssessmentHandler,
+  verifyFactHandler,
 } from './case.controller.js';
 import {
   validateCaseIdParam,
@@ -31,6 +38,9 @@ const router = Router({ mergeParams: true });
 
 // All case routes require authentication
 router.use(authenticateUser);
+
+// Clinical statistics for workspace
+router.route('/stats').get(getCaseStatsHandler);
 
 router
   .route('/')
@@ -81,6 +91,28 @@ router
 router
   .route('/:id/report/generate')
   .post(validateCaseIdParam, generateReportHandler);
+
+// ── Triage, Consent, Assessment & Review Endpoints ─────────────────────────
+router
+  .route('/:id/consent-and-submit')
+  .post(validateCaseIdParam, consentAndSubmitCaseHandler);
+
+router
+  .route('/:id/priority')
+  .patch(validateCaseIdParam, overridePriorityHandler);
+
+router
+  .route('/:id/assessment')
+  .get(validateCaseIdParam, getAssessmentHandler)
+  .post(validateCaseIdParam, saveDraftAssessmentHandler);
+
+router
+  .route('/:id/assessment/publish')
+  .post(validateCaseIdParam, publishAssessmentHandler);
+
+router
+  .route('/:id/facts/verify')
+  .post(validateCaseIdParam, verifyFactHandler);
 
 router
   .route('/:id')

@@ -1,4 +1,4 @@
-/* ── Structured Case Review Page Styles ─────────────────── */
+/* ── Structured Case Review Page Styles (Light Healthcare SaaS Theme) ────── */
 
 .case-review-page {
   max-width: 1200px;
@@ -21,14 +21,14 @@
   align-items: center;
   gap: 0.5rem;
   font-size: 0.875rem;
-  font-weight: 500;
-  color: #94a3b8;
+  font-weight: 600;
+  color: #64748b;
   text-decoration: none;
   transition: color 0.15s ease;
 }
 
 .btn-case-back:hover {
-  color: #38bdf8;
+  color: #0d9488;
 }
 
 .case-review-page__conv-link {
@@ -43,20 +43,20 @@
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  background: rgba(14, 165, 233, 0.1);
-  border: 1px solid rgba(14, 165, 233, 0.25);
-  color: #38bdf8;
+  background: #f0fdfa;
+  border: 1px solid #ccfbf1;
+  color: #0f766e;
   padding: 0.25rem 0.65rem;
   border-radius: 9999px;
   font-size: 0.8rem;
-  font-weight: 500;
+  font-weight: 600;
   text-decoration: none;
   transition: all 0.15s ease;
 }
 
 .case-link-pill:hover {
-  background: rgba(14, 165, 233, 0.2);
-  border-color: rgba(14, 165, 233, 0.4);
+  background: #ccfbf1;
+  border-color: #99f6e4;
 }
 
 /* ── Global Notification Banner ──────────────────────────── */
@@ -74,15 +74,15 @@
 }
 
 .case-notification--success {
-  background: rgba(16, 185, 129, 0.12);
-  border: 1px solid rgba(16, 185, 129, 0.3);
-  color: #34d399;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #166534;
 }
 
 .case-notification--error {
-  background: rgba(244, 63, 94, 0.12);
-  border: 1px solid rgba(244, 63, 94, 0.3);
-  color: #fb7185;
+  background: #fff1f2;
+  border: 1px solid #fecdd3;
+  color: #be123c;
 }
 
 .case-notification__content {
@@ -107,14 +107,14 @@
 
 /* ── State Containers (Loading, Not Created, Error) ───────── */
 .case-state-container {
-  background: rgba(15, 22, 41, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
   border-radius: 16px;
   padding: 3.5rem 2rem;
   text-align: center;
   max-width: 600px;
   margin: 3rem auto;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
 }
 
 .case-state-icon {
@@ -124,13 +124,13 @@
 .case-state-title {
   font-size: 1.4rem;
   font-weight: 700;
-  color: #f8fafc;
+  color: #0f172a;
   margin-bottom: 0.75rem;
 }
 
 .case-state-desc {
   font-size: 0.925rem;
-  color: #94a3b8;
+  color: #64748b;
   line-height: 1.6;
   margin-bottom: 1.75rem;
 }
@@ -151,26 +151,31 @@
 }
 
 .case-card {
-  background: rgba(17, 24, 39, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 14px;
-  padding: 1.75rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  transition: border-color 0.2s ease;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 1.75rem 2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.case-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .case-card--primary {
-  border-color: rgba(14, 165, 233, 0.3);
-  background: linear-gradient(180deg, rgba(17, 24, 39, 0.8) 0%, rgba(15, 22, 41, 0.7) 100%);
+  border-color: #cbd5e1;
+  background: #ffffff;
 }
 
 .case-card--discrepancy {
-  border-color: rgba(245, 158, 11, 0.35);
-  background: linear-gradient(180deg, rgba(26, 21, 14, 0.5) 0%, rgba(17, 24, 39, 0.7) 100%);
+  border-color: #fde68a;
+  background: #fffdf5;
 }
 
 .case-card--clean {
-  border-color: rgba(16, 185, 129, 0.25);
+  border-color: #bbf7d0;
+  background: #ffffff;
 }
 
 .case-card__header {
@@ -199,7 +204,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: #38bdf8;
+  color: #0d9488;
 }
 
 .case-card__id {
@@ -211,7 +216,7 @@
 .case-card__title {
   font-size: 1.3rem;
   font-weight: 700;
-  color: #f1f5f9;
+  color: #0f172a;
   letter-spacing: -0.01em;
 }
 
@@ -233,8 +238,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: rgba(15, 23, 42, 0.75);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
   border-radius: 10px;
   padding: 0.85rem 1.25rem;
   margin-bottom: 1.5rem;
@@ -251,7 +256,7 @@
 .case-status-bar__label {
   font-size: 0.825rem;
   font-weight: 600;
-  color: #94a3b8;
+  color: #64748b;
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
@@ -263,24 +268,27 @@
 }
 
 .case-status-select {
-  background: #0f172a;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: #e2e8f0;
-  padding: 0.4rem 0.75rem;
-  border-radius: 6px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #0f172a;
+  padding: 0.45rem 0.85rem;
+  border-radius: 8px;
   font-size: 0.85rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: border-color 0.15s ease;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .case-status-select:focus {
   outline: none;
-  border-color: #38bdf8;
+  border-color: #0d9488;
+  box-shadow: 0 0 0 2px rgba(13, 148, 136, 0.15);
 }
 
 .case-status-bar__updating {
   font-size: 0.8rem;
-  color: #38bdf8;
+  color: #0d9488;
+  font-weight: 600;
 }
 
 /* ── Status Badges ───────────────────────────────────────── */
@@ -301,21 +309,21 @@
 }
 
 .case-status-badge--in-progress {
-  background: rgba(245, 158, 11, 0.12);
-  color: #fbbf24;
-  border: 1px solid rgba(245, 158, 11, 0.25);
+  background: #fffbeb;
+  color: #b45309;
+  border: 1px solid #fde68a;
 }
 
 .case-status-badge--ready {
-  background: rgba(14, 165, 233, 0.12);
-  color: #38bdf8;
-  border: 1px solid rgba(14, 165, 233, 0.25);
+  background: #f0fdfa;
+  color: #0f766e;
+  border: 1px solid #ccfbf1;
 }
 
 .case-status-badge--reviewed {
-  background: rgba(16, 185, 129, 0.12);
-  color: #34d399;
-  border: 1px solid rgba(16, 185, 129, 0.25);
+  background: #f0fdf4;
+  color: #166534;
+  border: 1px solid #bbf7d0;
 }
 
 /* ── Source Attribution Badges ───────────────────────────── */
@@ -326,7 +334,7 @@
   padding: 0.2rem 0.55rem;
   border-radius: 6px;
   font-size: 0.725rem;
-  font-weight: 500;
+  font-weight: 600;
   white-space: nowrap;
 }
 
@@ -336,33 +344,33 @@
 }
 
 .source-badge--patient {
-  background: rgba(14, 165, 233, 0.1);
-  color: #7dd3fc;
-  border: 1px solid rgba(14, 165, 233, 0.2);
+  background: #f0fdfa;
+  color: #0f766e;
+  border: 1px solid #ccfbf1;
 }
 
 .source-badge--document {
-  background: rgba(168, 85, 247, 0.1);
-  color: #c084fc;
-  border: 1px solid rgba(168, 85, 247, 0.2);
+  background: #faf5ff;
+  color: #7e22ce;
+  border: 1px solid #f3e8ff;
 }
 
 .source-badge--clinician {
-  background: rgba(16, 185, 129, 0.1);
-  color: #6ee7b7;
-  border: 1px solid rgba(16, 185, 129, 0.2);
+  background: #eff6ff;
+  color: #1e40af;
+  border: 1px solid #dbeafe;
 }
 
 .source-badge--unspecified {
-  background: rgba(148, 163, 184, 0.1);
-  color: #94a3b8;
-  border: 1px solid rgba(148, 163, 184, 0.2);
+  background: #f8fafc;
+  color: #475569;
+  border: 1px solid #e2e8f0;
 }
 
 .source-badge__doc-link {
   background: none;
   border: none;
-  color: #c084fc;
+  color: #7e22ce;
   font-size: 0.7rem;
   font-weight: 600;
   text-decoration: underline;
@@ -372,13 +380,13 @@
 }
 
 .source-badge__doc-link:hover {
-  color: #e9d5ff;
+  color: #581c87;
 }
 
 /* ── Chief Complaint & Overview Grid ─────────────────────── */
 .case-chief-complaint {
-  background: rgba(15, 23, 42, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
   border-radius: 10px;
   padding: 1.25rem;
   margin-bottom: 1.25rem;
@@ -393,8 +401,8 @@
 
 .case-chief-complaint__text {
   font-size: 1.05rem;
-  font-weight: 500;
-  color: #f8fafc;
+  font-weight: 600;
+  color: #0f172a;
   line-height: 1.6;
 }
 
@@ -405,13 +413,19 @@
 }
 
 .case-overview-item {
-  background: rgba(15, 23, 42, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 10px;
-  padding: 1rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.15rem 1.25rem;
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.45rem;
+  transition: all 0.2s ease;
+}
+
+.case-overview-item:hover {
+  border-color: #cbd5e1;
+  background: #ffffff;
 }
 
 .case-overview-item__header {
@@ -423,16 +437,17 @@
 
 .case-overview-item__value {
   font-size: 0.95rem;
-  font-weight: 500;
-  color: #f1f5f9;
+  font-weight: 600;
+  color: #0f172a;
 }
 
 .case-field-label {
-  font-size: 0.75rem;
-  font-weight: 600;
+  font-size: 0.72rem;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #94a3b8;
+  color: #64748b;
+  margin-bottom: 0.15rem;
 }
 
 .case-empty-text {
@@ -453,7 +468,7 @@
 .case-section-subtitle {
   font-size: 0.95rem;
   font-weight: 600;
-  color: #cbd5e1;
+  color: #334155;
   margin-bottom: 0.85rem;
   letter-spacing: -0.01em;
 }
@@ -466,13 +481,20 @@
 }
 
 .case-symptom-item {
-  background: rgba(15, 23, 42, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 10px;
-  padding: 1rem 1.25rem;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.15rem 1.25rem;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.65rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  transition: all 0.2s ease;
+}
+
+.case-symptom-item:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.04);
 }
 
 .case-symptom-item__top {
@@ -493,7 +515,7 @@
 .case-symptom-name {
   font-size: 1rem;
   font-weight: 600;
-  color: #f1f5f9;
+  color: #0f172a;
 }
 
 .case-symptom-item__details {
@@ -502,7 +524,7 @@
   gap: 1.25rem;
   flex-wrap: wrap;
   font-size: 0.825rem;
-  color: #94a3b8;
+  color: #64748b;
 }
 
 .case-associated-list {
@@ -515,22 +537,25 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: rgba(15, 23, 42, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
   padding: 0.35rem 0.75rem;
   border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
 }
 
 .case-associated-name {
   font-size: 0.85rem;
-  color: #e2e8f0;
+  font-weight: 500;
+  color: #1e293b;
 }
 
 /* ── Tables & Data Grids ─────────────────────────────────── */
 .case-data-table-wrapper {
   overflow-x: auto;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid #e2e8f0;
   border-radius: 10px;
+  background: #ffffff;
 }
 
 .case-data-table {
@@ -541,20 +566,20 @@
 }
 
 .case-data-table th {
-  background: rgba(15, 23, 42, 0.8);
+  background: #f8fafc;
   padding: 0.75rem 1rem;
-  color: #94a3b8;
+  color: #475569;
   font-weight: 600;
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid #e2e8f0;
 }
 
 .case-data-table td {
   padding: 0.75rem 1rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-  color: #cbd5e1;
+  border-bottom: 1px solid #f1f5f9;
+  color: #334155;
 }
 
 .case-data-table tr:last-child td {
@@ -571,10 +596,18 @@
 
 .case-allergy-card,
 .case-vital-card {
-  background: rgba(15, 23, 42, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 10px;
-  padding: 1rem;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.15rem 1.25rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  transition: all 0.2s ease;
+}
+
+.case-allergy-card:hover,
+.case-vital-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.04);
 }
 
 .case-allergy-card__top {
@@ -588,12 +621,12 @@
 .case-allergy-substance {
   font-size: 0.95rem;
   font-weight: 600;
-  color: #f43f5e;
+  color: #e11d48;
 }
 
 .case-allergy-reaction {
   font-size: 0.825rem;
-  color: #94a3b8;
+  color: #64748b;
 }
 
 .case-vital-metrics {
@@ -618,14 +651,14 @@
 .case-vital-val {
   font-size: 1.05rem;
   font-weight: 700;
-  color: #38bdf8;
+  color: #0d9488;
 }
 
 .case-vital-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  border-top: 1px solid #e2e8f0;
   padding-top: 0.5rem;
 }
 
@@ -637,13 +670,20 @@
 }
 
 .case-finding-card {
-  background: rgba(15, 23, 42, 0.6);
-  border: 1px solid rgba(168, 85, 247, 0.2);
-  border-radius: 12px;
-  padding: 1.25rem;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 1.35rem 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 0.85rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  transition: all 0.2s ease;
+}
+
+.case-finding-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .case-finding-card__header {
@@ -660,24 +700,24 @@
 }
 
 .case-finding-card__icon {
-  color: #c084fc;
+  color: #7e22ce;
 }
 
 .case-finding-title {
   font-size: 1rem;
   font-weight: 600;
-  color: #f1f5f9;
+  color: #0f172a;
 }
 
 .case-finding-content p {
   font-size: 0.9rem;
-  color: #cbd5e1;
+  color: #334155;
   line-height: 1.6;
   white-space: pre-line;
 }
 
 .case-finding-footer {
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid #f1f5f9;
   padding-top: 0.75rem;
 }
 
@@ -685,11 +725,11 @@
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  background: rgba(168, 85, 247, 0.1);
-  border: 1px solid rgba(168, 85, 247, 0.25);
-  color: #d8b4fe;
+  background: #faf5ff;
+  border: 1px solid #d8b4fe;
+  color: #7e22ce;
   font-size: 0.775rem;
-  font-weight: 500;
+  font-weight: 600;
   padding: 0.35rem 0.65rem;
   border-radius: 6px;
   cursor: pointer;
@@ -697,8 +737,8 @@
 }
 
 .btn-view-document:hover {
-  background: rgba(168, 85, 247, 0.2);
-  color: #f3e8ff;
+  background: #f3e8ff;
+  color: #581c87;
 }
 
 /* ── Discrepancies Card & Comparison ─────────────────────── */
@@ -706,13 +746,13 @@
   display: flex;
   align-items: flex-start;
   gap: 0.75rem;
-  background: rgba(245, 158, 11, 0.1);
-  border: 1px solid rgba(245, 158, 11, 0.25);
+  background: #fffbeb;
+  border: 1px solid #fde68a;
   border-radius: 10px;
   padding: 1rem 1.25rem;
   margin-bottom: 1.25rem;
   font-size: 0.875rem;
-  color: #fde68a;
+  color: #92400e;
   line-height: 1.5;
 }
 
@@ -723,10 +763,11 @@
 }
 
 .case-discrepancy-card {
-  background: rgba(15, 23, 42, 0.6);
-  border: 1px solid rgba(245, 158, 11, 0.2);
-  border-radius: 12px;
-  padding: 1.25rem;
+  background: #ffffff;
+  border: 1px solid #fde68a;
+  border-radius: 14px;
+  padding: 1.35rem 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
 }
 
 .case-discrepancy-card__top {
@@ -739,18 +780,19 @@
 .case-discrepancy-field {
   font-size: 0.95rem;
   font-weight: 600;
-  color: #fbbf24;
+  color: #b45309;
 }
 
 .case-discrepancy-field code {
-  background: rgba(0, 0, 0, 0.3);
+  background: #fef3c7;
+  color: #92400e;
   padding: 0.15rem 0.4rem;
   border-radius: 4px;
 }
 
 .case-discrepancy-timestamp {
   font-size: 0.75rem;
-  color: #94a3b8;
+  color: #64748b;
 }
 
 .case-discrepancy-comparison {
@@ -767,18 +809,19 @@
 }
 
 .case-discrepancy-box {
-  background: rgba(17, 24, 39, 0.8);
+  background: #f8fafc;
   border-radius: 10px;
   padding: 1rem;
   min-height: 90px;
 }
 
 .case-discrepancy-box--prior {
-  border: 1px dashed rgba(255, 255, 255, 0.12);
+  border: 1px dashed #cbd5e1;
 }
 
 .case-discrepancy-box--new {
-  border: 1px solid rgba(245, 158, 11, 0.3);
+  border: 1px solid #fde68a;
+  background: #fffdf5;
 }
 
 .case-discrepancy-box__header {
@@ -793,21 +836,21 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #94a3b8;
+  color: #64748b;
 }
 
 .case-discrepancy-box__value {
   font-size: 0.95rem;
   font-weight: 500;
-  color: #f1f5f9;
+  color: #0f172a;
   line-height: 1.5;
 }
 
 .case-discrepancy-vs {
   font-size: 0.75rem;
   font-weight: 800;
-  color: #94a3b8;
-  background: rgba(255, 255, 255, 0.05);
+  color: #64748b;
+  background: #f1f5f9;
   padding: 0.35rem 0.6rem;
   border-radius: 50%;
   text-align: center;
@@ -816,7 +859,7 @@
 /* ── Missing Information Grid ────────────────────────────── */
 .case-missing-info-intro {
   font-size: 0.875rem;
-  color: #94a3b8;
+  color: #64748b;
   margin-bottom: 1rem;
 }
 
@@ -827,13 +870,19 @@
 }
 
 .case-missing-item {
-  background: rgba(15, 23, 42, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 10px;
-  padding: 1.1rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.15rem 1.25rem;
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.case-missing-item:hover {
+  border-color: #cbd5e1;
+  background: #ffffff;
 }
 
 .case-missing-item__header {
@@ -846,14 +895,14 @@
 .case-missing-category {
   font-size: 0.8rem;
   font-weight: 700;
-  color: #38bdf8;
+  color: #0d9488;
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
 
 .case-missing-description {
   font-size: 0.9rem;
-  color: #cbd5e1;
+  color: #334155;
   line-height: 1.5;
 }
 
@@ -862,7 +911,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
-  padding: 0.15rem 0.5rem;
+  padding: 0.2rem 0.6rem;
   border-radius: 6px;
   font-size: 0.725rem;
   font-weight: 600;
@@ -870,81 +919,87 @@
 }
 
 .case-tag--consistent {
-  background: rgba(16, 185, 129, 0.12);
-  color: #34d399;
-  border: 1px solid rgba(16, 185, 129, 0.25);
+  background: #f0fdf4;
+  color: #166534;
+  border: 1px solid #bbf7d0;
 }
 
 .case-tag--discrepancy {
-  background: rgba(245, 158, 11, 0.12);
-  color: #fbbf24;
-  border: 1px solid rgba(245, 158, 11, 0.25);
+  background: #fffbeb;
+  color: #b45309;
+  border: 1px solid #fde68a;
 }
 
 .case-tag--severity-severe {
-  background: rgba(244, 63, 94, 0.15);
-  color: #fb7185;
-  border: 1px solid rgba(244, 63, 94, 0.3);
+  background: #fff1f2;
+  color: #be123c;
+  border: 1px solid #fecdd3;
 }
 
 .case-tag--severity-moderate {
-  background: rgba(245, 158, 11, 0.15);
-  color: #fbbf24;
-  border: 1px solid rgba(245, 158, 11, 0.3);
+  background: #fffbeb;
+  color: #b45309;
+  border: 1px solid #fde68a;
 }
 
 .case-tag--severity-mild {
-  background: rgba(14, 165, 233, 0.15);
-  color: #38bdf8;
-  border: 1px solid rgba(14, 165, 233, 0.3);
+  background: #f0fdfa;
+  color: #0f766e;
+  border: 1px solid #ccfbf1;
 }
 
 .case-tag--status-active {
-  background: rgba(245, 158, 11, 0.12);
-  color: #fbbf24;
+  background: #fffbeb;
+  color: #b45309;
+  border: 1px solid #fde68a;
 }
 
 .case-tag--status-improving,
 .case-tag--status-resolved {
-  background: rgba(16, 185, 129, 0.12);
-  color: #34d399;
+  background: #f0fdf4;
+  color: #166534;
+  border: 1px solid #bbf7d0;
 }
 
 .case-tag--status-worsening {
-  background: rgba(244, 63, 94, 0.15);
-  color: #fb7185;
+  background: #fff1f2;
+  color: #be123c;
+  border: 1px solid #fecdd3;
 }
 
 .case-tag--med-current {
-  background: rgba(14, 165, 233, 0.12);
-  color: #38bdf8;
+  background: #f0fdfa;
+  color: #0f766e;
+  border: 1px solid #ccfbf1;
 }
 
 .case-tag--med-discontinued {
-  background: rgba(148, 163, 184, 0.12);
-  color: #94a3b8;
+  background: #f8fafc;
+  color: #64748b;
+  border: 1px solid #e2e8f0;
 }
 
 .case-tag--importance-critical {
-  background: rgba(244, 63, 94, 0.15);
-  color: #fb7185;
-  border: 1px solid rgba(244, 63, 94, 0.25);
+  background: #fff1f2;
+  color: #be123c;
+  border: 1px solid #fecdd3;
 }
 
 .case-tag--importance-important {
-  background: rgba(245, 158, 11, 0.15);
-  color: #fbbf24;
-  border: 1px solid rgba(245, 158, 11, 0.25);
+  background: #fffbeb;
+  color: #b45309;
+  border: 1px solid #fde68a;
 }
 
 .case-tag--importance-routine {
-  background: rgba(148, 163, 184, 0.12);
-  color: #94a3b8;
+  background: #f8fafc;
+  color: #64748b;
+  border: 1px solid #e2e8f0;
 }
 
 /* ── Buttons & Interactive Elements ──────────────────────── */
 .btn-case-primary {
-  background: #0ea5e9;
+  background: #0d9488;
   color: #ffffff;
   border: none;
   padding: 0.55rem 1.25rem;
@@ -955,11 +1010,12 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  transition: background 0.15s ease;
+  transition: background 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .btn-case-primary:hover:not(:disabled) {
-  background: #0284c7;
+  background: #0f766e;
 }
 
 .btn-case-primary:disabled {
@@ -968,31 +1024,33 @@
 }
 
 .btn-case-secondary {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: #e2e8f0;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #334155;
   padding: 0.55rem 1.15rem;
   border-radius: 8px;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 0.875rem;
   cursor: pointer;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
-  transition: background 0.15s ease;
+  transition: background 0.15s ease, border-color 0.15s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
 }
 
 .btn-case-secondary:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.1);
+  background: #f8fafc;
+  border-color: #94a3b8;
 }
 
 .btn-case-edit {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  background: rgba(14, 165, 233, 0.1);
-  border: 1px solid rgba(14, 165, 233, 0.3);
-  color: #38bdf8;
+  background: #f0fdfa;
+  border: 1px solid #ccfbf1;
+  color: #0f766e;
   padding: 0.45rem 0.9rem;
   border-radius: 8px;
   font-size: 0.825rem;
@@ -1002,24 +1060,25 @@
 }
 
 .btn-case-edit:hover {
-  background: rgba(14, 165, 233, 0.2);
+  background: #ccfbf1;
+  border-color: #99f6e4;
 }
 
 .btn-case-edit-inline {
-  background: none;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: #cbd5e1;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #475569;
   padding: 0.25rem 0.65rem;
   border-radius: 6px;
   font-size: 0.775rem;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
 .btn-case-edit-inline:hover {
-  border-color: #38bdf8;
-  color: #38bdf8;
+  border-color: #0d9488;
+  color: #0d9488;
 }
 
 .btn-case-consultation,
@@ -1028,29 +1087,30 @@
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #cbd5e1;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #334155;
   padding: 0.45rem 0.85rem;
   border-radius: 8px;
   font-size: 0.825rem;
-  font-weight: 500;
+  font-weight: 600;
   text-decoration: none;
   transition: all 0.15s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
 }
 
 .btn-case-consultation:hover,
 .btn-case-report:hover,
 .btn-case-provide-info:hover {
-  background: rgba(14, 165, 233, 0.12);
-  border-color: rgba(14, 165, 233, 0.3);
-  color: #38bdf8;
+  background: #f0fdfa;
+  border-color: #99f6e4;
+  color: #0f766e;
 }
 
 .btn-case-add {
-  background: rgba(14, 165, 233, 0.1);
-  border: 1px solid rgba(14, 165, 233, 0.25);
-  color: #38bdf8;
+  background: #f0fdfa;
+  border: 1px solid #ccfbf1;
+  color: #0f766e;
   padding: 0.35rem 0.75rem;
   border-radius: 6px;
   font-size: 0.8rem;
@@ -1059,39 +1119,39 @@
 }
 
 .btn-case-add:hover {
-  background: rgba(14, 165, 233, 0.2);
+  background: #ccfbf1;
 }
 
 .btn-case-remove {
-  background: rgba(244, 63, 94, 0.1);
-  border: 1px solid rgba(244, 63, 94, 0.2);
-  color: #fb7185;
+  background: #fff1f2;
+  border: 1px solid #fecdd3;
+  color: #be123c;
   padding: 0.2rem 0.5rem;
   border-radius: 4px;
   font-size: 0.725rem;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
 }
 
 .btn-case-remove:hover {
-  background: rgba(244, 63, 94, 0.2);
+  background: #fee2e2;
 }
 
 /* ── Empty Box ───────────────────────────────────────────── */
 .case-empty-box {
-  background: rgba(15, 23, 42, 0.4);
-  border: 1px dashed rgba(255, 255, 255, 0.08);
+  background: #f8fafc;
+  border: 1px dashed #cbd5e1;
   border-radius: 10px;
   padding: 2rem 1.5rem;
   text-align: center;
-  color: #94a3b8;
+  color: #64748b;
   font-size: 0.9rem;
 }
 
 .case-empty-subtext {
   display: block;
   font-size: 0.8rem;
-  color: #64748b;
+  color: #94a3b8;
   margin-top: 0.5rem;
 }
 
@@ -1099,7 +1159,7 @@
 .case-modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.75);
+  background: rgba(15, 23, 42, 0.45);
   backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
@@ -1110,15 +1170,15 @@
 }
 
 .case-modal-container {
-  background: #0f1629;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
   border-radius: 16px;
   width: 100%;
   max-width: 600px;
   max-height: 90vh;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 20px 45px -8px rgba(0, 0, 0, 0.15);
   overflow: hidden;
 }
 
@@ -1128,7 +1188,8 @@
 
 .case-modal-header {
   padding: 1.25rem 1.75rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid #e2e8f0;
+  background: #ffffff;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -1138,7 +1199,7 @@
 .case-modal-title {
   font-size: 1.2rem;
   font-weight: 700;
-  color: #f8fafc;
+  color: #0f172a;
   margin-top: 0.15rem;
 }
 
@@ -1147,27 +1208,28 @@
   align-items: center;
   gap: 0.75rem;
   font-size: 0.775rem;
-  color: #94a3b8;
+  color: #64748b;
   margin-top: 0.25rem;
 }
 
 .case-modal-close {
   background: none;
   border: none;
-  color: #94a3b8;
+  color: #64748b;
   font-size: 1.5rem;
   cursor: pointer;
   line-height: 1;
+  transition: color 0.15s ease;
 }
 
 .case-modal-close:hover {
-  color: #ffffff;
+  color: #0f172a;
 }
 
 .case-modal-tabs {
   display: flex;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(15, 23, 42, 0.6);
+  border-bottom: 1px solid #e2e8f0;
+  background: #f8fafc;
   overflow-x: auto;
 }
 
@@ -1176,7 +1238,7 @@
   border: none;
   border-bottom: 2px solid transparent;
   padding: 0.75rem 1.25rem;
-  color: #94a3b8;
+  color: #64748b;
   font-size: 0.85rem;
   font-weight: 600;
   cursor: pointer;
@@ -1185,25 +1247,26 @@
 }
 
 .case-modal-tab:hover {
-  color: #cbd5e1;
+  color: #0f172a;
 }
 
 .case-modal-tab--active {
-  color: #38bdf8;
-  border-bottom-color: #38bdf8;
-  background: rgba(14, 165, 233, 0.05);
+  color: #0d9488;
+  border-bottom-color: #0d9488;
+  background: #f0fdfa;
 }
 
 .case-modal-body {
   padding: 1.5rem 1.75rem;
   overflow-y: auto;
   flex: 1;
+  background: #ffffff;
 }
 
 .case-modal-footer {
   padding: 1rem 1.75rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(15, 23, 42, 0.4);
+  border-top: 1px solid #e2e8f0;
+  background: #f8fafc;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -1216,11 +1279,11 @@
 
 .case-unsaved-badge {
   padding: 0.35rem 1.75rem;
-  background: rgba(245, 158, 11, 0.1);
-  color: #fbbf24;
+  background: #fffbeb;
+  color: #b45309;
   font-size: 0.75rem;
   font-weight: 600;
-  border-bottom: 1px solid rgba(245, 158, 11, 0.2);
+  border-bottom: 1px solid #fde68a;
 }
 
 /* ── Forms inside Modal ──────────────────────────────────── */
@@ -1232,42 +1295,44 @@
 }
 
 .case-form-group {
-  margin-bottom: 1.1rem;
+  margin-bottom: 1.25rem;
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: 0.45rem;
 }
 
 .case-form-label {
   font-size: 0.8rem;
   font-weight: 600;
-  color: #cbd5e1;
+  color: #334155;
+  margin-bottom: 0.15rem;
 }
 
 .case-form-input,
 .case-form-select,
 .case-form-textarea {
-  background: #0a0e1a;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: #f1f5f9;
-  padding: 0.6rem 0.85rem;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #0f172a;
+  padding: 0.65rem 0.9rem;
   border-radius: 8px;
   font-size: 0.875rem;
   width: 100%;
   box-sizing: border-box;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .case-form-input:focus,
 .case-form-select:focus,
 .case-form-textarea:focus {
   outline: none;
-  border-color: #38bdf8;
-  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.15);
+  border-color: #0d9488;
+  box-shadow: 0 0 0 2px rgba(13, 148, 136, 0.15);
 }
 
 .case-form-error {
   font-size: 0.75rem;
-  color: #fb7185;
+  color: #be123c;
   margin-top: 0.15rem;
 }
 
@@ -1290,10 +1355,11 @@
 }
 
 .case-edit-item-card {
-  background: rgba(15, 23, 42, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 10px;
-  padding: 1.1rem;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
 }
 
 .case-edit-item-card__header {
@@ -1306,7 +1372,7 @@
 .case-edit-item-num {
   font-size: 0.8rem;
   font-weight: 700;
-  color: #38bdf8;
+  color: #0d9488;
   text-transform: uppercase;
 }
 
@@ -1324,11 +1390,11 @@
 }
 
 .case-doc-text-pre {
-  background: #0a0e1a;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
   border-radius: 10px;
   padding: 1.25rem;
-  color: #cbd5e1;
+  color: #1e293b;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 0.825rem;
   line-height: 1.6;
@@ -1342,8 +1408,8 @@
 .case-spinner {
   width: 28px;
   height: 28px;
-  border: 3px solid rgba(255, 255, 255, 0.1);
-  border-top-color: #38bdf8;
+  border: 3px solid #e2e8f0;
+  border-top-color: #0d9488;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
   margin: 0 auto;
@@ -1352,8 +1418,8 @@
 .case-spinner-lg {
   width: 44px;
   height: 44px;
-  border: 4px solid rgba(255, 255, 255, 0.1);
-  border-top-color: #38bdf8;
+  border: 4px solid #e2e8f0;
+  border-top-color: #0d9488;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
   margin: 0 auto 1.5rem auto;
@@ -1362,8 +1428,8 @@
 .case-spinner-sm {
   width: 14px;
   height: 14px;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  border-top-color: #ffffff;
+  border: 2px solid #cbd5e1;
+  border-top-color: #0d9488;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
   display: inline-block;
@@ -1394,8 +1460,8 @@
 }
 
 .case-completeness-overview {
-  background: rgba(15, 23, 42, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
   border-radius: 12px;
   padding: 1.25rem;
   margin-bottom: 1.5rem;
@@ -1419,7 +1485,7 @@
 .case-completeness-percentage {
   font-size: 2.25rem;
   font-weight: 800;
-  color: #38bdf8;
+  color: #0d9488;
   line-height: 1;
   font-variant-numeric: tabular-nums;
 }
@@ -1433,12 +1499,12 @@
 .case-completeness-score-label {
   font-size: 0.9rem;
   font-weight: 600;
-  color: #f1f5f9;
+  color: #0f172a;
 }
 
 .case-completeness-score-subtext {
   font-size: 0.8rem;
-  color: #94a3b8;
+  color: #64748b;
 }
 
 .case-completeness-actions {
@@ -1455,7 +1521,7 @@
 .case-progress-bar {
   width: 100%;
   height: 8px;
-  background: rgba(255, 255, 255, 0.08);
+  background: #e2e8f0;
   border-radius: 999px;
   overflow: hidden;
   margin-bottom: 0.85rem;
@@ -1468,15 +1534,15 @@
 }
 
 .case-progress-bar__fill--high {
-  background: linear-gradient(90deg, #10b981, #34d399);
+  background: linear-gradient(90deg, #10b981, #059669);
 }
 
 .case-progress-bar__fill--medium {
-  background: linear-gradient(90deg, #38bdf8, #818cf8);
+  background: linear-gradient(90deg, #0d9488, #0284c7);
 }
 
 .case-progress-bar__fill--low {
-  background: linear-gradient(90deg, #f59e0b, #fbbf24);
+  background: linear-gradient(90deg, #f59e0b, #d97706);
 }
 
 .case-completeness-disclaimer {
@@ -1494,18 +1560,18 @@
 }
 
 .case-completeness-section--required {
-  background: rgba(245, 158, 11, 0.06);
-  border: 1px solid rgba(245, 158, 11, 0.2);
+  background: #fffbeb;
+  border: 1px solid #fde68a;
 }
 
 .case-completeness-section--warning {
-  background: rgba(239, 68, 68, 0.05);
-  border: 1px solid rgba(239, 68, 68, 0.15);
+  background: #fef2f2;
+  border: 1px solid #fecdd3;
 }
 
 .case-completeness-section--incomplete {
-  background: rgba(148, 163, 184, 0.05);
-  border: 1px solid rgba(148, 163, 184, 0.15);
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
 }
 
 .case-completeness-section__header {
@@ -1519,19 +1585,19 @@
 .case-completeness-section__title {
   font-size: 0.95rem;
   font-weight: 700;
-  color: #f8fafc;
+  color: #0f172a;
   margin: 0;
 }
 
 .case-tag--required-pill {
-  background: rgba(245, 158, 11, 0.15);
-  color: #f59e0b;
-  border-color: rgba(245, 158, 11, 0.3);
+  background: #fffbeb;
+  color: #b45309;
+  border: 1px solid #fde68a;
 }
 
 .case-completeness-section__intro {
   font-size: 0.825rem;
-  color: #94a3b8;
+  color: #64748b;
   margin: 0 0 0.85rem 0;
   line-height: 1.45;
 }
@@ -1543,10 +1609,11 @@
 }
 
 .case-missing-card {
-  background: rgba(15, 23, 42, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
   border-radius: 8px;
   padding: 0.85rem 1rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
 }
 
 .case-missing-card--required {
@@ -1564,12 +1631,12 @@
 .case-missing-card__label {
   font-size: 0.875rem;
   font-weight: 600;
-  color: #e2e8f0;
+  color: #0f172a;
 }
 
 .case-missing-card__reason {
   font-size: 0.8rem;
-  color: #94a3b8;
+  color: #64748b;
   margin: 0;
   line-height: 1.4;
 }
@@ -1578,11 +1645,11 @@
   display: flex;
   align-items: flex-start;
   gap: 0.75rem;
-  background: rgba(16, 185, 129, 0.08);
-  border: 1px solid rgba(16, 185, 129, 0.2);
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
   border-radius: 10px;
   padding: 0.85rem 1.15rem;
-  color: #34d399;
+  color: #166534;
   font-size: 0.85rem;
   line-height: 1.45;
   margin-bottom: 1.25rem;
@@ -1603,17 +1670,17 @@
 
 .case-incomplete-item__label {
   font-weight: 600;
-  color: #cbd5e1;
+  color: #334155;
 }
 
 .case-incomplete-item__reason {
-  color: #94a3b8;
+  color: #64748b;
 }
 
 /* Optional wrapper */
 .case-completeness-optional-wrapper {
   margin-top: 1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid #e2e8f0;
   padding-top: 1rem;
 }
 
@@ -1624,16 +1691,16 @@
   width: 100%;
   background: none;
   border: none;
-  color: #94a3b8;
+  color: #64748b;
   font-size: 0.85rem;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
   padding: 0.4rem 0;
   transition: color 0.2s ease;
 }
 
 .case-completeness-optional-toggle:hover {
-  color: #e2e8f0;
+  color: #0f172a;
 }
 
 .case-completeness-optional-body {
@@ -1648,19 +1715,20 @@
 }
 
 .case-optional-tag-item {
-  background: rgba(15, 23, 42, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
   border-radius: 6px;
   padding: 0.6rem 0.8rem;
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
 }
 
 .case-optional-tag-item__title {
   font-size: 0.8rem;
   font-weight: 600;
-  color: #cbd5e1;
+  color: #1e293b;
 }
 
 .case-optional-tag-item__desc {
@@ -1675,9 +1743,9 @@
   align-items: center;
   gap: 0.5rem;
   font-size: 0.8rem;
-  color: #f59e0b;
-  background: rgba(245, 158, 11, 0.08);
-  border: 1px solid rgba(245, 158, 11, 0.2);
+  color: #92400e;
+  background: #fffbeb;
+  border: 1px solid #fde68a;
   border-radius: 8px;
   padding: 0.5rem 0.85rem;
   margin-top: 0.65rem;

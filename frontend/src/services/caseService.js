@@ -26,16 +26,27 @@ export const caseService = {
    *
    * @param {Object} [params]
    * @param {string} [params.status]
+   * @param {string} [params.priority]
+   * @param {string} [params.search]
    * @param {number} [params.limit]
    * @returns {Promise<{ success: boolean, cases: Array }>}
    */
-  listCases: ({ status, limit } = {}) => {
+  listCases: ({ status, priority, search, limit } = {}) => {
     const params = new URLSearchParams();
-    if (status) params.append('status', status);
+    if (status && status !== 'all') params.append('status', status);
+    if (priority && priority !== 'all') params.append('priority', priority);
+    if (search && search.trim()) params.append('search', search.trim());
     if (limit) params.append('limit', limit.toString());
     const query = params.toString();
     return apiGet(`/cases${query ? `?${query}` : ''}`);
   },
+
+  /**
+   * Get aggregated clinical workspace metrics
+   *
+   * @returns {Promise<{ success: boolean, stats: Object }>}
+   */
+  getCaseStats: () => apiGet('/cases/stats'),
 
   /**
    * Create or initialize a structured case for a conversation
@@ -66,6 +77,68 @@ export const caseService = {
    */
   updateCaseStatus: (caseId, status) =>
     apiPatch(`/cases/${caseId}/status`, { status }),
+
+  /**
+   * Patient explicit consent and submission to the prioritized clinical review queue
+   *
+   * @param {string} caseId
+   * @param {string} statement
+   * @returns {Promise<{ success: boolean, case: Object, message: string }>}
+   */
+  consentAndSubmit: (caseId, statement) =>
+    apiPost(`/cases/${caseId}/consent-and-submit`, { statement }),
+
+  /**
+   * Clinician priority override with documented rationale
+   *
+   * @param {string} caseId
+   * @param {string} priority
+   * @param {string} reason
+   * @returns {Promise<{ success: boolean, case: Object, message: string }>}
+   */
+  overridePriority: (caseId, priority, reason) =>
+    apiPatch(`/cases/${caseId}/priority`, { priority, reason }),
+
+  /**
+   * Retrieve Doctor's Final Assessment for a case
+   *
+   * @param {string} caseId
+   * @returns {Promise<{ success: boolean, assessment: Object|null }>}
+   */
+  getAssessment: (caseId) =>
+    apiGet(`/cases/${caseId}/assessment`),
+
+  /**
+   * Save draft of Doctor's Clinical Assessment
+   *
+   * @param {string} caseId
+   * @param {Object} assessmentData
+   * @returns {Promise<{ success: boolean, assessment: Object, message: string }>}
+   */
+  saveDraftAssessment: (caseId, assessmentData) =>
+    apiPost(`/cases/${caseId}/assessment`, assessmentData),
+
+  /**
+   * Publish final Doctor's Clinical Report with explicit clinician acknowledgement
+   *
+   * @param {string} caseId
+   * @param {Object} acknowledgement
+   * @param {Object} [assessmentData]
+   * @returns {Promise<{ success: boolean, assessment: Object, message: string }>}
+   */
+  publishAssessment: (caseId, acknowledgement, assessmentData = {}) =>
+    apiPost(`/cases/${caseId}/assessment/publish`, { acknowledgement, assessmentData }),
+
+  /**
+   * Clinician fact verification
+   *
+   * @param {string} caseId
+   * @param {string} category
+   * @param {string} factId
+   * @returns {Promise<{ success: boolean, case: Object, message: string }>}
+   */
+  verifyFact: (caseId, category, factId) =>
+    apiPost(`/cases/${caseId}/facts/verify`, { category, factId }),
 
   /**
    * Extract clinical facts from conversation messages and merge into Case

@@ -11,6 +11,16 @@ import {
   integratePatientAnswer,
   didMessageResolveQuestion,
 } from './case.followUp.service.js';
+import { evaluateTriage } from './case.triage.service.js';
+import {
+  getAssessmentByCaseId,
+  saveDraftAssessment,
+  publishAssessment,
+  verifyCaseFact,
+  DOCTOR_ACKNOWLEDGEMENT_STATEMENT,
+} from './case.assessment.service.js';
+import { logAuditEvent } from '../../utils/auditLogger.js';
+import { createNotification } from '../../services/notification.service.js';
 
 export {
   evaluateCaseCompleteness,
@@ -20,6 +30,12 @@ export {
   askOrGetFollowUpQuestion,
   integratePatientAnswer,
   didMessageResolveQuestion,
+  evaluateTriage,
+  getAssessmentByCaseId,
+  saveDraftAssessment,
+  publishAssessment,
+  verifyCaseFact,
+  DOCTOR_ACKNOWLEDGEMENT_STATEMENT,
 };
 
 /**
@@ -46,7 +62,17 @@ const PERMITTED_UPDATE_FIELDS = [
   'missingInformation',
 ];
 
-const VALID_STATUSES = ['in_progress', 'ready_for_review', 'reviewed'];
+const VALID_STATUSES = [
+  'in_progress',
+  'ready_for_review',
+  'queued',
+  'in_review',
+  'needs_information',
+  'escalated',
+  'reviewed',
+  'completed',
+  'cancelled',
+];
 
 /**
  * Creates or initializes a structured case for an authorized conversation.
@@ -351,28 +377,206 @@ export const updateCaseStatus = async ({ caseId, userId, userRole, status }) => 
 
 /**
  * Lists structured cases accessible to the authenticated user.
- * Patients only see their own cases; Clinicians/Admins see all cases (optionally filtered by status).
+ * Patients only see their own cases; Clinicians/Admins see all cases with triage prioritization.
  *
  * @param {Object} params
  * @param {string} params.userId
  * @param {string} params.userRole
  * @param {string|null} [params.status=null]
+ * @param {string|null} [params.priority=null]
+ * @param {string|null} [params.search=null]
  * @param {number} [params.limit=50]
  * @returns {Promise<Array>} Cases list
  */
-export const listCases = async ({ userId, userRole, status = null, limit = 50 }) => {
-  const query = {};
-  if (status && VALID_STATUSES.includes(status)) {
-    query.status = status;
-  }
-
+export const listCases = async ({
+  userId,
+  userRole,
+  status = null,
+  priority = null,
+  search = null,
+  limit = 50,
+}) => {
   if (userRole === 'PATIENT') {
-    query.patientId = userId;
     return caseRepo.findCasesByPatientId(userId, { limit });
   }
 
-  // Clinician or Admin
-  return caseRepo.findAllCases(query, { limit });
+  // Clinician or Admin: return queue-ordered cases
+  return caseRepo.findQueueCases({
+    status,
+    priority,
+    search,
+    limit,
+  });
+};
+
+/**
+ * Patient explicit consent and case submission to the clinical review queue.
+ */
+export const consentAndSubmitCase = async ({
+  caseId,
+  userId,
+  userRole,
+  statement = null,
+  req = null,
+}) => {
+  const existingCase = await caseRepo.findCaseById(caseId);
+  if (!existingCase) {
+    const error = new Error('Case not found');
+    error.statusCode = 404;
+    throw error;
+  }
+
+  const patientIdStr = existingCase.patientId?._id?.toString() || existingCase.patientId?.toString();
+  if (userRole === 'PATIENT' && patientIdStr !== userId.toString()) {
+    const error = new Error('Case not found');
+    error.statusCode = 404;
+    throw error;
+  }
+
+  // Completeness check
+  const completeness = evaluateCaseCompleteness(existingCase);
+  if (!completeness.canSubmitForReview) {
+    const missingLabels = completeness.missingRequiredInformation
+      .map((m) => m.label)
+      .join(', ');
+    const error = new Error(
+      `Cannot submit case for review: required clinical intake information is missing (${missingLabels})`
+    );
+    error.statusCode = 400;
+    throw error;
+  }
+
+  // Triage evaluation
+  const triageResult = evaluateTriage(existingCase);
+
+  const consentRecord = {
+    consentGiven: true,
+    consentedAt: new Date(),
+    reportVersion: 1,
+    statement:
+      statement ||
+      'I have reviewed the information in this report to the best of my knowledge. I understand that it will be shared with an authorized healthcare professional for review. I understand that this AI-generated report is not a medical diagnosis.',
+    consentedBy: userId,
+  };
+
+  const triageRecord = {
+    priority: triageResult.priority,
+    signals: triageResult.signals,
+    safetyWarnings: triageResult.safetyWarnings,
+    categoryReason: triageResult.categoryReason,
+    isEmergencyOverride: triageResult.isEmergencyOverride,
+    evaluatedAt: triageResult.evaluatedAt,
+  };
+
+  const nextStatus = triageResult.isEmergencyOverride ? 'escalated' : 'ready_for_review';
+
+  const updatedCase = await caseRepo.updateCaseById(caseId, {
+    consent: consentRecord,
+    triage: triageRecord,
+    status: nextStatus,
+  });
+
+  // Audit logging
+  await logAuditEvent({
+    userId,
+    userRole,
+    action: 'CONSENT_AND_SUBMIT',
+    resourceType: 'Case',
+    resourceId: caseId.toString(),
+    details: {
+      priority: triageResult.priority,
+      isEmergencyOverride: triageResult.isEmergencyOverride,
+      status: nextStatus,
+    },
+    req,
+  });
+
+  // Patient notification
+  await createNotification({
+    userId,
+    title: 'Case Submitted for Review',
+    message: `Your medical intake report has been submitted to the prioritized clinical review queue (Priority: ${triageResult.priority}).`,
+    type: 'case_update',
+    caseId: existingCase._id,
+    conversationId: existingCase.conversationId,
+  });
+
+  return updatedCase;
+};
+
+/**
+ * Allows authorized clinicians to override triage priority with justification.
+ */
+export const overrideCasePriority = async ({
+  caseId,
+  professionalId,
+  professionalRole,
+  priority,
+  reason,
+  req = null,
+}) => {
+  if (professionalRole !== 'PROFESSIONAL' && professionalRole !== 'ADMIN') {
+    const error = new Error('Only clinical professionals may override case priority');
+    error.statusCode = 403;
+    throw error;
+  }
+
+  const validPriorities = ['URGENT', 'HIGH', 'NORMAL', 'INCOMPLETE'];
+  if (!validPriorities.includes(priority)) {
+    const error = new Error(`Invalid priority. Must be one of: ${validPriorities.join(', ')}`);
+    error.statusCode = 400;
+    throw error;
+  }
+
+  if (!reason || typeof reason !== 'string' || !reason.trim()) {
+    const error = new Error('A clinical reason is required when overriding case priority');
+    error.statusCode = 400;
+    throw error;
+  }
+
+  const existingCase = await caseRepo.findCaseById(caseId);
+  if (!existingCase) {
+    const error = new Error('Case not found');
+    error.statusCode = 404;
+    throw error;
+  }
+
+  const triageUpdate = {
+    ...(existingCase.triage?.toObject?.() || existingCase.triage || {}),
+    priority,
+    overrideBy: professionalId,
+    overrideReason: reason.trim(),
+    overrideAt: new Date(),
+  };
+
+  const updatePayload = {
+    triage: triageUpdate,
+  };
+
+  if (priority === 'URGENT' && existingCase.status !== 'reviewed') {
+    updatePayload.status = 'escalated';
+  }
+
+  const updatedCase = await caseRepo.updateCaseById(caseId, updatePayload);
+
+  await logAuditEvent({
+    userId: professionalId,
+    userRole: professionalRole,
+    action: 'PRIORITY_OVERRIDDEN',
+    resourceType: 'Case',
+    resourceId: caseId.toString(),
+    details: { newPriority: priority, reason: reason.trim() },
+    req,
+  });
+
+  return updatedCase;
+};
+
+/**
+ * Returns aggregated stats for the clinical workspace.
+ */
+export const getCaseStats = async () => {
+  return caseRepo.getCaseStats();
 };
 
 export default {
@@ -382,10 +586,17 @@ export default {
   updateCase,
   updateCaseStatus,
   listCases,
+  consentAndSubmitCase,
+  overrideCasePriority,
+  getCaseStats,
   evaluateCaseCompleteness,
   getCaseCompleteness,
   selectNextFollowUpQuestion,
   getFollowUpStatus,
   askOrGetFollowUpQuestion,
   integratePatientAnswer,
+  getAssessmentByCaseId,
+  saveDraftAssessment,
+  publishAssessment,
+  verifyCaseFact,
 };

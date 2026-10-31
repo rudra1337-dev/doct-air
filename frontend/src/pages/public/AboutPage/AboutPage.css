@@ -1,6 +1,7 @@
-/* ── AboutPage ──────────────────────────────────────── */
+/* ── AboutPage (Light Healthcare SaaS Theme) ────────────────────────── */
 .about-page {
   padding: 4rem 1.5rem 6rem;
+  background-color: #f8fafc;
 }
 
 .about-page__container {
@@ -17,11 +18,11 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: rgba(14, 165, 233, 0.1);
-  border: 1px solid rgba(14, 165, 233, 0.25);
-  color: #38bdf8;
+  background: #f0fdfa;
+  border: 1px solid #ccfbf1;
+  color: #0f766e;
   font-size: 0.8rem;
-  font-weight: 600;
+  font-weight: 700;
   padding: 0.35rem 0.875rem;
   border-radius: 9999px;
   margin-bottom: 1.25rem;
@@ -33,20 +34,20 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #38bdf8;
+  background: #0d9488;
 }
 
 .about-page__title {
   font-size: clamp(2rem, 4vw, 3rem);
   font-weight: 800;
-  color: #ffffff;
+  color: #0f172a;
   margin-bottom: 1.25rem;
   letter-spacing: -0.02em;
 }
 
 .about-page__subtitle {
   font-size: 1.125rem;
-  color: #94a3b8;
+  color: #64748b;
   max-width: 720px;
   margin: 0 auto;
   line-height: 1.6;
@@ -60,21 +61,22 @@
 }
 
 .about-page__story-card {
-  background: rgba(17, 24, 39, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
   padding: 2.25rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
 .about-page__story-card h2 {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #f1f5f9;
+  color: #0f172a;
   margin-bottom: 1rem;
 }
 
 .about-page__story-card p {
-  color: #94a3b8;
+  color: #475569;
   line-height: 1.7;
   font-size: 0.975rem;
 }
@@ -85,8 +87,8 @@
 
 .about-page__values-heading {
   font-size: 1.5rem;
-  font-weight: 700;
-  color: #ffffff;
+  font-weight: 800;
+  color: #0f172a;
   margin-bottom: 2rem;
   text-align: center;
 }
@@ -98,45 +100,47 @@
 }
 
 .about-page__value-item {
-  background: rgba(15, 22, 41, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 12px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
   padding: 2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
 .about-page__value-num {
   display: inline-block;
   font-size: 0.85rem;
-  font-weight: 700;
-  color: #38bdf8;
+  font-weight: 800;
+  color: #0d9488;
   margin-bottom: 0.75rem;
 }
 
 .about-page__value-item h3 {
   font-size: 1.1rem;
-  font-weight: 600;
-  color: #f8fafc;
+  font-weight: 700;
+  color: #0f172a;
   margin-bottom: 0.5rem;
 }
 
 .about-page__value-item p {
   font-size: 0.9rem;
-  color: #94a3b8;
+  color: #64748b;
   line-height: 1.6;
 }
 
 .about-page__cta {
   text-align: center;
-  background: rgba(15, 22, 41, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
   border-radius: 16px;
   padding: 3rem 2rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
 }
 
 .about-page__cta h2 {
   font-size: 1.5rem;
-  font-weight: 700;
-  color: #ffffff;
+  font-weight: 800;
+  color: #0f172a;
   margin-bottom: 1.5rem;
 }
 
