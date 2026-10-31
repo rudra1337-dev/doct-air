@@ -1,6 +1,6 @@
-/* ── Workspace Shared Views (Light Healthcare Theme) ───────────────── */
+/* ── Workspace Shared Views (Antigravity & Weightless Theme) ─────── */
 .workspace-view {
-  max-width: 1200px;
+  max-width: 1240px;
   margin: 0 auto;
 }
 
@@ -8,52 +8,72 @@
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  gap: 1.25rem;
-  margin-bottom: 2rem;
+  gap: 1.5rem;
+  margin-bottom: 2.25rem;
   flex-wrap: wrap;
 }
 
 .workspace-view__eyebrow {
-  display: block;
-  font-size: 0.8rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   color: #0d9488;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.35rem;
 }
 
 .workspace-view__title {
-  font-size: 1.875rem;
+  font-size: 2rem;
   font-weight: 800;
   color: #0f172a;
   letter-spacing: -0.025em;
   line-height: 1.2;
 }
 
+/* ── Antigravity Bento Cards ─────────────────────────────────────── */
 .workspace-card {
+  position: relative;
   display: flex;
-  gap: 1.5rem;
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 16px;
-  padding: 1.75rem 2rem;
+  gap: 1.75rem;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  border-radius: 20px;
+  padding: 2rem;
   margin-bottom: 2rem;
   align-items: flex-start;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04);
-  transition: all 0.2s ease;
+  box-shadow: var(--shadow-orbital-sm);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+.workspace-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-orbital-lift);
+  border-color: rgba(45, 212, 191, 0.45);
+  background: rgba(255, 255, 255, 0.96);
 }
 
 .workspace-card--pro {
-  border-color: #e0e7ff;
+  border-color: rgba(224, 231, 255, 0.9);
 }
 
 .workspace-card__icon {
   flex-shrink: 0;
-  padding: 0.85rem;
-  background: #f0fdfa;
+  padding: 0.95rem;
+  background: rgba(240, 253, 250, 0.9);
   border: 1px solid #ccfbf1;
-  border-radius: 12px;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px -1px rgba(13, 148, 136, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.workspace-card:hover .workspace-card__icon {
+  transform: scale(1.05) rotate(1deg);
 }
 
 .workspace-card__icon--pro {
@@ -62,7 +82,7 @@
 }
 
 .workspace-card__content h2 {
-  font-size: 1.25rem;
+  font-size: 1.3rem;
   font-weight: 700;
   color: #0f172a;
   margin-bottom: 0.5rem;
@@ -71,9 +91,79 @@
 .workspace-card__content p {
   font-size: 0.95rem;
   color: #475569;
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
+/* ── Bento Metrics Grid ──────────────────────────────────────────── */
+.bento-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.bento-metric-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  border-radius: 18px;
+  padding: 1.65rem;
+  box-shadow: var(--shadow-orbital-sm);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+  overflow: hidden;
+}
+
+.bento-metric-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-orbital-md);
+  border-color: rgba(45, 212, 191, 0.45);
+  background: rgba(255, 255, 255, 0.96);
+}
+
+.bento-metric-card__glow {
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(20px);
+  opacity: 0.6;
+}
+
+/* ── Bento Case Cards ────────────────────────────────────────────── */
+.bento-cases-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.25rem;
+}
+
+.bento-case-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  border-radius: 18px;
+  padding: 1.65rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: var(--shadow-orbital-sm);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, background 0.3s ease;
+}
+
+.bento-case-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-orbital-lift);
+  border-color: rgba(45, 212, 191, 0.45);
+  background: rgba(255, 255, 255, 0.98);
+}
+
+/* ── Workspace Standard Grid ─────────────────────────────────────── */
 .workspace-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
@@ -81,32 +171,35 @@
 }
 
 .workspace-grid__item {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 14px;
-  padding: 1.5rem 1.75rem;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  border-radius: 18px;
+  padding: 1.65rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: 1.25rem;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04);
-  transition: all 0.2s ease;
+  box-shadow: var(--shadow-orbital-sm);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .workspace-grid__item:hover {
-  border-color: #cbd5e1;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-  transform: translateY(-1px);
+  border-color: rgba(45, 212, 191, 0.45);
+  box-shadow: var(--shadow-orbital-lift);
+  transform: translateY(-6px);
+  background: rgba(255, 255, 255, 0.98);
 }
 
 .workspace-grid__item h3 {
-  font-size: 1.05rem;
+  font-size: 1.1rem;
   font-weight: 700;
   color: #0f172a;
 }
 
 .workspace-grid__item p {
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   color: #64748b;
   line-height: 1.55;
 }
@@ -117,22 +210,28 @@
   color: #0d9488;
   text-decoration: none;
   align-self: flex-start;
-  transition: color 0.15s ease;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
 }
 
 .workspace-grid__link:hover {
   color: #0f766e;
+  transform: translateX(2px);
 }
 
 .workspace-placeholder-box {
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px dashed #cbd5e1;
-  border-radius: 12px;
+  border-radius: 20px;
   padding: 3.5rem 2rem;
   text-align: center;
   max-width: 680px;
   margin: 2rem auto;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  box-shadow: var(--shadow-orbital-sm);
 }
 
 .workspace-placeholder-box h2 {
@@ -147,4 +246,66 @@
   color: #64748b;
   line-height: 1.6;
   margin-bottom: 1.75rem;
+}
+
+/* ── Dark Mode Overrides for Workspace Views ─────────────────────── */
+.dark .workspace-view__title {
+  color: #f8fafc;
+}
+
+.dark .workspace-view__subtitle {
+  color: #94a3b8;
+}
+
+.dark .workspace-stat-card {
+  background: rgba(30, 41, 59, 0.85);
+  border-color: rgba(51, 65, 85, 0.85);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4);
+}
+
+.dark .workspace-stat-card__val {
+  color: #f8fafc;
+}
+
+.dark .workspace-stat-card__label {
+  color: #94a3b8;
+}
+
+.dark .workspace-grid__item {
+  background: rgba(30, 41, 59, 0.85);
+  border-color: rgba(51, 65, 85, 0.85);
+}
+
+.dark .workspace-grid__item:hover {
+  background: rgba(30, 41, 59, 0.98);
+  border-color: rgba(45, 212, 191, 0.45);
+}
+
+.dark .workspace-grid__item h3 {
+  color: #f8fafc;
+}
+
+.dark .workspace-grid__item p {
+  color: #94a3b8;
+}
+
+.dark .workspace-grid__link {
+  color: #2dd4bf;
+}
+
+.dark .workspace-grid__link:hover {
+  color: #5eead4;
+}
+
+.dark .workspace-placeholder-box {
+  background: rgba(30, 41, 59, 0.85);
+  border-color: #334155;
+}
+
+.dark .workspace-placeholder-box h2 {
+  color: #f8fafc;
+}
+
+.dark .workspace-placeholder-box p {
+  color: #94a3b8;
 }

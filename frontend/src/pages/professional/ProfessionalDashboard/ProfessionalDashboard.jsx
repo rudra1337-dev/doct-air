@@ -59,33 +59,37 @@ export default function ProfessionalDashboard() {
         </Link>
       </div>
 
-      {/* Real-time Triage Stat Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-        <div className="p-4 rounded-xl border border-rose-200 bg-rose-50/70 flex flex-col justify-between shadow-xs">
+      {/* Real-time Triage Stat Cards (Antigravity Bento Grid) */}
+      <div className="bento-metrics-grid">
+        <div className="bento-metric-card border-rose-200 bg-rose-50/50 hover:border-rose-300">
+          <div className="bento-metric-card__glow bg-rose-400/20" />
           <div className="flex items-center justify-between text-xs text-rose-800 font-bold mb-1">
             <span>URGENT / ESCALATED</span>
-            <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
+            <span className="w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse shadow-xs" />
           </div>
-          <div className="text-3xl font-bold text-rose-700">{stats.urgentCases || 0}</div>
-          <span className="text-[11px] text-rose-600 mt-1">Requires immediate clinical attention</span>
+          <div className="text-3xl font-extrabold text-rose-700 tracking-tight mt-1">{stats.urgentCases || 0}</div>
+          <span className="text-[11px] text-rose-600 mt-1 block">Requires immediate clinical attention</span>
         </div>
 
-        <div className="p-4 rounded-xl border border-amber-200 bg-amber-50/70 flex flex-col justify-between shadow-xs">
+        <div className="bento-metric-card border-amber-200 bg-amber-50/50 hover:border-amber-300">
+          <div className="bento-metric-card__glow bg-amber-400/20" />
           <div className="text-xs text-amber-800 font-bold mb-1">HIGH PRIORITY</div>
-          <div className="text-3xl font-bold text-amber-800">{stats.highPriority || 0}</div>
-          <span className="text-[11px] text-amber-700 mt-1">Acute presentation or abnormal vitals</span>
+          <div className="text-3xl font-extrabold text-amber-800 tracking-tight mt-1">{stats.highPriority || 0}</div>
+          <span className="text-[11px] text-amber-700 mt-1 block">Acute presentation or abnormal vitals</span>
         </div>
 
-        <div className="p-4 rounded-xl border border-teal-200 bg-teal-50/50 flex flex-col justify-between shadow-xs">
+        <div className="bento-metric-card border-teal-200 bg-teal-50/40 hover:border-teal-300">
+          <div className="bento-metric-card__glow bg-teal-400/20" />
           <div className="text-xs text-teal-800 font-bold mb-1">PENDING REVIEW</div>
-          <div className="text-3xl font-bold text-teal-800">{stats.pendingReviews || 0}</div>
-          <span className="text-[11px] text-teal-700 mt-1">Awaiting physician verification</span>
+          <div className="text-3xl font-extrabold text-teal-800 tracking-tight mt-1">{stats.pendingReviews || 0}</div>
+          <span className="text-[11px] text-teal-700 mt-1 block">Awaiting physician verification</span>
         </div>
 
-        <div className="p-4 rounded-xl border border-emerald-200 bg-emerald-50/70 flex flex-col justify-between shadow-xs">
+        <div className="bento-metric-card border-emerald-200 bg-emerald-50/50 hover:border-emerald-300">
+          <div className="bento-metric-card__glow bg-emerald-400/20" />
           <div className="text-xs text-emerald-800 font-bold mb-1">COMPLETED REVIEWS</div>
-          <div className="text-3xl font-bold text-emerald-800">{stats.completedReviews || 0}</div>
-          <span className="text-[11px] text-emerald-700 mt-1">Assessments signed & published</span>
+          <div className="text-3xl font-extrabold text-emerald-800 tracking-tight mt-1">{stats.completedReviews || 0}</div>
+          <span className="text-[11px] text-emerald-700 mt-1 block">Assessments signed & published</span>
         </div>
       </div>
 
@@ -141,10 +145,10 @@ export default function ProfessionalDashboard() {
               return (
                 <div
                   key={caseId}
-                  className={`p-4 rounded-xl border transition-all flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-xs ${
+                  className={`p-5 rounded-2xl border transition-all duration-300 flex flex-col md:flex-row md:items-center justify-between gap-4 backdrop-blur-md ${
                     isUrgent
-                      ? "border-rose-300 bg-rose-50/50 hover:bg-rose-50/70"
-                      : "border-slate-200 bg-white hover:border-teal-200"
+                      ? "border-rose-300 bg-rose-50/70 hover:bg-rose-50/90 hover:shadow-orbital-md hover:-translate-y-1"
+                      : "border-slate-200/90 bg-white/90 hover:border-teal-300/80 hover:bg-white hover:shadow-orbital-md hover:-translate-y-1"
                   }`}
                 >
                   <div className="flex-1 min-w-0">
@@ -166,9 +170,10 @@ export default function ProfessionalDashboard() {
                   <div className="flex items-center gap-2 shrink-0">
                     <Link
                       to={`/professional/cases/${caseId}`}
-                      className="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-teal-600 hover:bg-teal-700 text-white transition-colors shadow-xs"
+                      className="btn-primary text-xs py-2 px-4 shadow-sm"
                     >
-                      Review Case &rarr;
+                      <span>Review Case</span>
+                      <span aria-hidden="true">&rarr;</span>
                     </Link>
                   </div>
                 </div>

@@ -87,7 +87,7 @@ export default function ProfessionalQueue() {
         </div>
 
         {/* Priority Tabs */}
-        <div className="flex items-center gap-1 overflow-x-auto pb-1 md:pb-0">
+        <div className="flex items-center gap-1 overflow-x-auto pb-1 md:pb-0 no-scrollbar touch-scroll overscroll-contain">
           {[
             { id: "all", label: "All Priorities" },
             { id: "URGENT", label: "Urgent" },
@@ -164,12 +164,12 @@ export default function ProfessionalQueue() {
             return (
               <div
                 key={caseId}
-                className={`p-4 rounded-xl border transition-all flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-xs ${
+                className={`p-5 rounded-2xl border transition-all duration-300 flex flex-col md:flex-row md:items-center justify-between gap-4 backdrop-blur-md shadow-xs ${
                   isUrgent
-                    ? "border-rose-300 bg-rose-50/50 hover:bg-rose-50/70"
+                    ? "border-rose-300 bg-rose-50/70 hover:bg-rose-50/90 hover:shadow-orbital-md hover:-translate-y-1.5"
                     : isHigh
-                    ? "border-amber-300 bg-amber-50/40 hover:bg-amber-50/60"
-                    : "border-slate-200 bg-white hover:border-teal-200"
+                    ? "border-amber-300 bg-amber-50/50 hover:bg-amber-50/70 hover:shadow-orbital-md hover:-translate-y-1.5"
+                    : "border-slate-200/90 bg-white/90 hover:border-teal-300/80 hover:bg-white hover:shadow-orbital-md hover:-translate-y-1.5"
                 }`}
               >
                 <div className="flex-1 min-w-0">
@@ -214,13 +214,14 @@ export default function ProfessionalQueue() {
                 <div className="flex items-center gap-2 shrink-0">
                   <Link
                     to={`/professional/cases/${caseId}`}
-                    className={`px-4 py-2 rounded-lg text-xs font-semibold transition-colors shadow-xs ${
+                    className={`text-xs font-semibold py-2 px-4 rounded-xl shadow-xs transition-all duration-200 flex items-center gap-1.5 active:scale-95 ${
                       isUrgent
-                        ? "bg-rose-600 hover:bg-rose-700 text-white"
-                        : "bg-teal-600 hover:bg-teal-700 text-white"
+                        ? "bg-rose-600 hover:bg-rose-700 text-white shadow-rose-500/20 hover:-translate-y-0.5 hover:shadow-md"
+                        : "btn-primary"
                     }`}
                   >
-                    Open Case Review &rarr;
+                    <span>Open Case Review</span>
+                    <span aria-hidden="true">&rarr;</span>
                   </Link>
                 </div>
               </div>

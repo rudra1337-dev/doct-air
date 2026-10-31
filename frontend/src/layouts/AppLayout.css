@@ -17,9 +17,12 @@
   position: sticky;
   top: 0;
   z-index: 90;
-  background: #ffffff;
-  border-bottom: 1px solid #e2e8f0;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+  box-shadow: 0 4px 20px -4px rgba(15, 23, 42, 0.04);
+  transition: all 0.3s ease;
 }
 
 .app-layout__header-inner {
@@ -244,6 +247,7 @@
   margin: 0 !important;
   padding: 0 !important;
   height: calc(100vh - 64px);
+  height: calc(100dvh - 64px);
   min-height: 0;
   overflow: hidden;
   display: flex;
@@ -296,4 +300,88 @@
   .app-layout__home-link { display: none; }
   .app-layout__hamburger { display: flex; }
   .app-layout__mobile-drawer { display: block; }
+}
+
+/* ── Dark Mode Overrides for AppLayout ───────────────────────────── */
+.dark .app-layout {
+  background-color: #0b1120;
+  color: #cbd5e1;
+}
+
+.dark .app-layout__header {
+  background: rgba(15, 23, 42, 0.9);
+  border-bottom-color: rgba(51, 65, 85, 0.85);
+  box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.4);
+}
+
+.dark .app-layout__logo-text {
+  color: #f8fafc;
+}
+
+.dark .app-layout__nav-link {
+  color: #94a3b8;
+}
+
+.dark .app-layout__nav-link:hover {
+  color: #f8fafc;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.dark .app-layout__nav-link--active {
+  color: #2dd4bf !important;
+  background: rgba(20, 184, 166, 0.15);
+}
+
+.dark .app-layout__home-link {
+  color: #94a3b8;
+  border-color: #334155;
+  background: rgba(30, 41, 59, 0.6);
+}
+
+.dark .app-layout__home-link:hover {
+  color: #f8fafc;
+  background: rgba(30, 41, 59, 1);
+}
+
+.dark .app-layout__logout-btn {
+  background: rgba(244, 63, 94, 0.15);
+  border-color: rgba(244, 63, 94, 0.3);
+  color: #fda4af;
+}
+
+.dark .app-layout__logout-btn:hover {
+  background: rgba(244, 63, 94, 0.25);
+  color: #fff;
+}
+
+.dark .app-layout__hamburger span {
+  background-color: #cbd5e1;
+}
+
+.dark .app-layout__footer {
+  background: #0f172a;
+  border-top-color: #1e293b;
+}
+
+.dark .app-layout__footer-text {
+  color: #64748b;
+}
+
+.dark .app-layout__mobile-drawer {
+  background: rgba(15, 23, 42, 0.98);
+  border-bottom-color: #1e293b;
+}
+
+.dark .app-layout__mobile-link {
+  color: #94a3b8;
+}
+
+.dark .app-layout__mobile-link:hover {
+  color: #f8fafc;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.dark .app-layout__mobile-link--active {
+  color: #2dd4bf !important;
+  background: rgba(20, 184, 166, 0.15);
 }

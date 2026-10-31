@@ -135,13 +135,23 @@
 }
 
 .hero__chat-card {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  border-radius: 24px;
   overflow: hidden;
-  box-shadow: 0 20px 45px -8px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(13, 148, 136, 0.08);
+  box-shadow: var(--shadow-orbital-lift);
   width: 100%;
   max-width: 440px;
+  animation: antigravityFloat 6s ease-in-out infinite;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero__chat-card:hover {
+  animation-play-state: paused;
+  transform: translateY(-8px) scale(1.01);
+  box-shadow: 0 30px 60px -10px rgba(15, 23, 42, 0.15), 0 0 30px -4px rgba(45, 212, 191, 0.25);
 }
 
 .hero__chat-header {

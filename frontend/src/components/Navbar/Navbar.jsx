@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import ThemeToggle from "../common/ThemeToggle";
+import NotificationBell from "../common/NotificationBell";
 import "./Navbar.css";
 
 export default function Navbar() {
@@ -238,23 +240,27 @@ export default function Navbar() {
 
         {/* Desktop Actions */}
         <div className="navbar__actions">
+          <ThemeToggle />
           {isAuthenticated && user ? (
-            <div className="navbar__user-group">
-              <span className={`navbar__user-badge ${isProfessionalOrAdmin ? "navbar__user-badge--pro" : ""}`}>
-                {user.role === "ADMIN" ? "Admin" : isProfessionalOrAdmin ? "Clinical" : "Patient"}
-              </span>
-              <span className="navbar__user-name" title={user.email}>
-                {user.name}
-              </span>
-              <button
-                type="button"
-                onClick={handleLogout}
-                className="navbar__logout-btn"
-                aria-label="Sign out"
-              >
-                Sign Out
-              </button>
-            </div>
+            <>
+              <NotificationBell />
+              <div className="navbar__user-group">
+                <span className={`navbar__user-badge ${isProfessionalOrAdmin ? "navbar__user-badge--pro" : ""}`}>
+                  {user.role === "ADMIN" ? "Admin" : isProfessionalOrAdmin ? "Clinical" : "Patient"}
+                </span>
+                <span className="navbar__user-name" title={user.email}>
+                  {user.name}
+                </span>
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  className="navbar__logout-btn"
+                  aria-label="Sign out"
+                >
+                  Sign Out
+                </button>
+              </div>
+            </>
           ) : (
             <>
               <NavLink
@@ -441,6 +447,11 @@ export default function Navbar() {
 
         {/* Mobile Actions */}
         <div className="navbar__mobile-actions">
+          <div className="flex items-center justify-between gap-3 mb-3">
+            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Appearance</span>
+            <ThemeToggle />
+          </div>
+
           {isAuthenticated && user ? (
             <>
               <div className="navbar__mobile-user-info">
@@ -449,6 +460,15 @@ export default function Navbar() {
                 </span>
                 <span className="navbar__mobile-user-name">{user.name}</span>
               </div>
+              <NavLink
+                to="/notifications"
+                className={({ isActive }) =>
+                  `navbar__mobile-link ${isActive ? "navbar__mobile-link--active" : ""}`
+                }
+                onClick={() => setMenuOpen(false)}
+              >
+                Notifications
+              </NavLink>
               <button
                 type="button"
                 onClick={handleLogout}

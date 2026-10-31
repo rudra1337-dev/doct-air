@@ -744,7 +744,7 @@ export default function PatientConsultation() {
               <div>
                 <strong className="text-rose-900 font-bold block">URGENT EMERGENCY WARNING</strong>
                 <span className="text-rose-800">
-                  Acute clinical red flags have been detected. DoctAir does not provide emergency medical diagnosis or treatment. If you are experiencing severe chest pain, acute shortness of breath, or an immediate emergency, call <strong>112 / 911</strong> or visit the nearest emergency room immediately.
+                  Acute clinical red flags have been detected. DoctAir does not provide emergency medical diagnosis or treatment. If you are experiencing severe chest pain, acute shortness of breath, or an immediate emergency, call <strong>112</strong> or visit the nearest emergency room immediately.
                 </span>
               </div>
             </div>
@@ -794,7 +794,7 @@ export default function PatientConsultation() {
           <div className="mx-4 mb-2 p-2.5 rounded-lg bg-rose-50 border border-rose-300 text-rose-900 text-xs flex items-center gap-2 shadow-sm">
             <span>⚠️</span>
             <span>
-              <strong className="font-bold text-rose-950">Emergency Advisory:</strong> Possible emergency symptoms detected in your text. If you are in distress, dial <strong className="font-bold">112 / 911</strong> or go to an emergency room now.
+              <strong className="font-bold text-rose-950">Emergency Advisory:</strong> Possible emergency symptoms detected in your text. If you are in distress, dial <strong className="font-bold">112</strong> or go to an emergency room now.
             </span>
           </div>
         )}

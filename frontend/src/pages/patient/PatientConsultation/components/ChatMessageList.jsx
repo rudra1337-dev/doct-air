@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { formatFileSize } from '../utils/documentUtils.js';
 
 export default function ChatMessageList({
@@ -13,12 +13,45 @@ export default function ChatMessageList({
   activeSpeakingId = null,
   onToggleSpeak,
 }) {
+  const containerRef = useRef(null);
   const bottomRef = useRef(null);
+  const [isScrolledUp, setIsScrolledUp] = useState(false);
+  const lastMessageCountRef = useRef(messages.length);
 
-  // Auto-scroll on new messages or chunk updates
+  // Measure user scroll position to respect reading state
+  const handleScroll = useCallback(() => {
+    if (!containerRef.current) return;
+    const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
+    const distanceFromBottom = scrollHeight - (scrollTop + clientHeight);
+    // User is considered scrolled up if they are > 100px from the bottom
+    setIsScrolledUp(distanceFromBottom > 100);
+  }, []);
+
+  const scrollToBottom = useCallback((behavior = 'smooth') => {
+    if (!bottomRef.current) return;
+    bottomRef.current.scrollIntoView({ behavior, block: 'end' });
+  }, []);
+
+  // Auto-scroll when messages update
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages, isStreaming]);
+    const isNewMessage = messages.length > lastMessageCountRef.current;
+    lastMessageCountRef.current = messages.length;
+
+    if (isNewMessage) {
+      // User sent a message or assistant just started a response
+      scrollToBottom('smooth');
+      setIsScrolledUp(false);
+    } else if (isStreaming && !isScrolledUp) {
+      // Use instant scroll during rapid token streaming so smooth animation frame queues don't lag or jitter
+      scrollToBottom('auto');
+    }
+  }, [messages, isStreaming, isScrolledUp, scrollToBottom]);
+
+  // Initial scroll to bottom on mount
+  useEffect(() => {
+    scrollToBottom('auto');
+    setIsScrolledUp(false);
+  }, [scrollToBottom]);
 
   const formatMsgTime = (timestamp) => {
     if (!timestamp) return '';
@@ -98,7 +131,13 @@ export default function ChatMessageList({
   }
 
   return (
-    <div className="chat-messages" role="log" aria-live="polite">
+    <div
+      ref={containerRef}
+      onScroll={handleScroll}
+      className="chat-messages relative scrollbar-thin"
+      role="log"
+      aria-live="polite"
+    >
       <div className="chat-messages__inner">
         {messages.map((msg, index) => {
           const isUser = msg.role === 'user';
@@ -288,6 +327,26 @@ export default function ChatMessageList({
 
         <div ref={bottomRef} style={{ height: 16 }} />
       </div>
+
+      {/* Floating Scroll to Bottom Button */}
+      {isScrolledUp && (
+        <button
+          type="button"
+          onClick={() => {
+            scrollToBottom('smooth');
+            setIsScrolledUp(false);
+          }}
+          className="chat-scroll-bottom-btn"
+          aria-label="Scroll to newest messages"
+          title="Scroll to newest messages"
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+          <span>Scroll to latest</span>
+          {isStreaming && <span className="w-2 h-2 rounded-full bg-teal-500 animate-pulse" />}
+        </button>
+      )}
     </div>
   );
 }

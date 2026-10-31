@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import ThemeToggle from "../components/common/ThemeToggle";
+import NotificationBell from "../components/common/NotificationBell";
 import "./AppLayout.css";
 
 const PATIENT_NAV = [
@@ -78,6 +80,9 @@ export default function AppLayout({ role = "patient" }) {
 
           {/* Session / Right Controls */}
           <div className="app-layout__controls">
+            <NotificationBell />
+            <ThemeToggle />
+
             <Link to="/" className="app-layout__home-link" title="Return to public site">
               Public Site
             </Link>
@@ -127,6 +132,17 @@ export default function AppLayout({ role = "patient" }) {
                 </NavLink>
               </li>
             ))}
+            <li>
+              <NavLink
+                to="/notifications"
+                className={({ isActive }) =>
+                  `app-layout__mobile-link ${isActive ? "app-layout__mobile-link--active" : ""}`
+                }
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Notifications
+              </NavLink>
+            </li>
             <li className="app-layout__mobile-divider">
               <Link to="/" className="app-layout__mobile-link" onClick={() => setMobileMenuOpen(false)}>
                 Return to Public Site

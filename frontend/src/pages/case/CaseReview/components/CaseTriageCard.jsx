@@ -108,24 +108,24 @@ export default function CaseTriageCard({
 
       {/* Override Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm">
-          <div className="bg-white border border-slate-200 rounded-xl max-w-md w-full p-6 shadow-2xl">
-            <h3 className="text-base font-bold text-slate-900 mb-2">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm overscroll-contain">
+          <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl max-w-md w-full p-6 shadow-2xl max-h-[90dvh] overflow-y-auto scrollbar-thin">
+            <h3 className="text-base font-bold text-slate-900 dark:text-white mb-2">
               Override Clinical Triage Priority
             </h3>
-            <p className="text-xs text-slate-600 mb-4 leading-relaxed">
+            <p className="text-xs text-slate-600 dark:text-slate-300 mb-4 leading-relaxed">
               As an authorized clinician, you may reclassify the urgency of this case. Document your clinical justification below for the audit trail.
             </p>
 
             {error && (
-              <div className="p-3 mb-3 rounded-lg bg-rose-50 border border-rose-200 text-xs text-rose-800 font-medium">
+              <div className="p-3 mb-3 rounded-lg bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900/50 text-xs text-rose-800 dark:text-rose-300 font-medium">
                 {error}
               </div>
             )}
 
             <form onSubmit={handleSubmitOverride} className="space-y-4">
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">
                   New Priority Classification
                 </label>
                 <div className="grid grid-cols-3 gap-2">
@@ -137,7 +137,7 @@ export default function CaseTriageCard({
                       className={`text-xs py-2 rounded-lg border font-bold transition-all shadow-sm ${
                         selectedPriority === p
                           ? 'bg-teal-600 border-teal-700 text-white shadow'
-                          : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
+                          : 'bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-600'
                       }`}
                     >
                       {p}
@@ -147,7 +147,7 @@ export default function CaseTriageCard({
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">
                   Clinical Justification <span className="text-rose-600">*</span>
                 </label>
                 <textarea
@@ -155,7 +155,7 @@ export default function CaseTriageCard({
                   value={reason}
                   onChange={(e) => setReason(e.target.value)}
                   placeholder="e.g. Patient has underlying chronic respiratory disease; elevated priority justified."
-                  className="w-full bg-white border border-slate-300 rounded-lg p-2.5 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500"
+                  className="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg p-2.5 text-xs text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500"
                   required
                 />
               </div>
@@ -164,7 +164,7 @@ export default function CaseTriageCard({
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-800"
+                  className="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-800 dark:hover:text-white"
                 >
                   Cancel
                 </button>

@@ -296,7 +296,7 @@ export const streamUserMessageWithAI = async ({
       emergencyCheck.hasEmergency &&
       !finalAssistantText.toLowerCase().includes('emergency')
     ) {
-      finalAssistantText = `⚠️ **IMMEDIATE ATTENTION RECOMMENDED**: Based on the symptoms described ("${emergencyCheck.matchedPattern}"), this may be a medical emergency. Please do not wait in a queue — contact emergency services (911/112) or proceed to the nearest emergency facility immediately.\n\n${finalAssistantText}`;
+      finalAssistantText = `⚠️ **IMMEDIATE ATTENTION RECOMMENDED**: Based on the symptoms described ("${emergencyCheck.matchedPattern}"), this may be a medical emergency. Please do not wait in a queue — contact emergency services (112) or proceed to the nearest emergency facility immediately.\n\n${finalAssistantText}`;
     }
 
     // 6. Persist completed assistant message only after successful stream completion
