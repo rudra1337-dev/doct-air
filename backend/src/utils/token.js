@@ -35,8 +35,8 @@ export const getCookieOptions = () => {
   const isProduction = NODE_ENV === 'production';
   return {
     httpOnly: true, // Prevents access via client JavaScript (XSS mitigation)
-    secure: isProduction, // HTTPS only in production
-    sameSite: isProduction ? 'strict' : 'lax', // Protects against CSRF while allowing local dev navigation
+    secure: isProduction, // HTTPS only in production (required for sameSite: 'none')
+    sameSite: isProduction ? 'none' : 'lax', // 'none' required for cross-domain cookies between Vercel and Render in production
     maxAge: COOKIE_MAX_AGE_MS, // Expiration matching session token
     path: '/',
   };

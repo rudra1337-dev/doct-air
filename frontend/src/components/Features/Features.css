@@ -44,22 +44,24 @@
 }
 
 .feature-card {
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 16px;
-  padding: 1.75rem;
+  background: rgba(248, 250, 252, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  border-radius: 18px;
+  padding: 1.85rem;
   display: flex;
   flex-direction: column;
   gap: 0.875rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
-  transition: background 0.2s, border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  box-shadow: var(--shadow-orbital-sm);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: default;
 }
 .feature-card:hover {
   background: #ffffff;
-  border-color: #99f6e4;
-  transform: translateY(-3px);
-  box-shadow: 0 6px 16px rgba(13, 148, 136, 0.08);
+  border-color: rgba(45, 212, 191, 0.45);
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-orbital-lift);
 }
 
 .feature-card--purple { border-color: #f3e8ff; }

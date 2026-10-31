@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
 import caseService from '../../../services/caseService';
-import notificationService from '../../../services/notificationService';
 import PriorityBadge from '../../../components/common/PriorityBadge';
 import StatusBadge from '../../case/CaseReview/components/StatusBadge';
 import './PatientDashboard.css';
@@ -10,7 +9,6 @@ import './PatientDashboard.css';
 export default function PatientDashboard() {
   const { user } = useAuth();
   const [cases, setCases] = useState([]);
-  const [notifications, setNotifications] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -18,17 +16,12 @@ export default function PatientDashboard() {
     let isMounted = true;
     setIsLoading(true);
 
-    Promise.all([
-      caseService.listCases().catch(() => ({ success: false, cases: [] })),
-      notificationService.getNotifications().catch(() => ({ success: false, notifications: [] })),
-    ])
-      .then(([casesRes, notifRes]) => {
+    caseService
+      .listCases()
+      .then((casesRes) => {
         if (!isMounted) return;
         if (casesRes?.success && Array.isArray(casesRes.cases)) {
           setCases(casesRes.cases);
-        }
-        if (notifRes?.success && Array.isArray(notifRes.notifications)) {
-          setNotifications(notifRes.notifications.filter((n) => !n.read));
         }
       })
       .catch((err) => {
@@ -42,15 +35,6 @@ export default function PatientDashboard() {
       isMounted = false;
     };
   }, []);
-
-  const handleDismissNotification = async (notifId) => {
-    try {
-      await notificationService.markAsRead(notifId);
-      setNotifications((prev) => prev.filter((n) => (n.id || n._id) !== notifId));
-    } catch {
-      setNotifications((prev) => prev.filter((n) => (n.id || n._id) !== notifId));
-    }
-  };
 
   const activeCase = cases.find((c) =>
     ['in_progress', 'needs_information', 'ready_for_review'].includes(c.status)
@@ -91,55 +75,6 @@ export default function PatientDashboard() {
         </div>
       </div>
 
-      {/* ── Real-Time Notifications Banner ────────────────────────── */}
-      {notifications.length > 0 && (
-        <div className="mb-6 space-y-2.5">
-          {notifications.map((notif) => {
-            const notifId = notif.id || notif._id;
-            const isAssessment = notif.type === 'assessment_published';
-            return (
-              <div
-                key={notifId}
-                className={`p-4 rounded-xl border flex items-start justify-between gap-3 shadow-sm ${
-                  isAssessment
-                    ? 'bg-emerald-50 border-emerald-200 text-emerald-950'
-                    : 'bg-white border-slate-200 text-slate-800'
-                }`}
-              >
-                <div className="flex items-start gap-3">
-                  <span className="text-xl mt-0.5">{isAssessment ? '📋' : '🔔'}</span>
-                  <div>
-                    <h3 className="font-bold text-sm text-slate-900">{notif.title}</h3>
-                    <p className="text-xs text-slate-600 mt-0.5">{notif.message}</p>
-                    {notif.caseId && (
-                      <div className="mt-2.5 flex items-center gap-2">
-                        <Link
-                          to={`/patient/cases/${notif.caseId}/report`}
-                          className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white transition-colors shadow-sm inline-flex items-center gap-1.5"
-                        >
-                          <span>View Doctor Assessment & Prescription</span>
-                          <span>&rarr;</span>
-                        </Link>
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                <button
-                  type="button"
-                  onClick={() => handleDismissNotification(notifId)}
-                  className="text-slate-400 hover:text-slate-600 text-lg p-1 leading-none"
-                  title="Dismiss notification"
-                  aria-label="Dismiss notification"
-                >
-                  &times;
-                </button>
-              </div>
-            );
-          })}
-        </div>
-      )}
-
       {/* ── Emergency Safety Advisory Banner ─────────────────────── */}
       <div className="mb-6 p-4 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-xs flex items-center justify-between gap-4 shadow-sm">
         <div className="flex items-center gap-2.5">
@@ -153,23 +88,26 @@ export default function PatientDashboard() {
         </Link>
       </div>
 
-      {/* ── Workspace Summary Metrics ─────────────────────────────── */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-        <div className="p-5 rounded-xl bg-white border border-slate-200 shadow-sm">
+      {/* ── Workspace Summary Metrics (Antigravity Bento Grid) ─── */}
+      <div className="bento-metrics-grid">
+        <div className="bento-metric-card">
+          <div className="bento-metric-card__glow bg-teal-400/20" />
           <span className="text-xs text-slate-500 uppercase font-bold tracking-wider">Total Consultations</span>
-          <div className="text-3xl font-extrabold text-slate-900 mt-1.5">{cases.length}</div>
+          <div className="text-3xl font-extrabold text-slate-900 mt-2 tracking-tight">{cases.length}</div>
           <span className="text-xs text-slate-500 mt-1 block">Intake sessions on file</span>
         </div>
 
-        <div className="p-5 rounded-xl bg-white border border-slate-200 shadow-sm">
+        <div className="bento-metric-card">
+          <div className="bento-metric-card__glow bg-amber-400/20" />
           <span className="text-xs text-slate-500 uppercase font-bold tracking-wider">Awaiting Clinical Review</span>
-          <div className="text-3xl font-extrabold text-amber-600 mt-1.5">{inReviewCasesCount}</div>
+          <div className="text-3xl font-extrabold text-amber-600 mt-2 tracking-tight">{inReviewCasesCount}</div>
           <span className="text-xs text-slate-500 mt-1 block">Queued with attending healthcare team</span>
         </div>
 
-        <div className="p-5 rounded-xl bg-white border border-slate-200 shadow-sm">
+        <div className="bento-metric-card">
+          <div className="bento-metric-card__glow bg-emerald-400/20" />
           <span className="text-xs text-slate-500 uppercase font-bold tracking-wider">Doctor Assessments Ready</span>
-          <div className="text-3xl font-extrabold text-teal-600 mt-1.5">{reviewedCasesCount}</div>
+          <div className="text-3xl font-extrabold text-teal-600 mt-2 tracking-tight">{reviewedCasesCount}</div>
           <span className="text-xs text-slate-500 mt-1 block">Official reports & prescriptions ready</span>
         </div>
       </div>
@@ -215,7 +153,7 @@ export default function PatientDashboard() {
             </Link>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="bento-cases-grid">
             {cases.slice(0, 6).map((c) => {
               const caseId = c.id || c._id;
               const chiefComplaint = c.chiefComplaint?.text || 'Clinical Consultation Intake';
@@ -234,7 +172,7 @@ export default function PatientDashboard() {
               return (
                 <div
                   key={caseId}
-                  className="p-5 rounded-xl bg-white border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all flex flex-col justify-between shadow-sm"
+                  className="bento-case-card"
                 >
                   <div>
                     <div className="flex items-center justify-between gap-2 mb-2.5">

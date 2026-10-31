@@ -33,6 +33,9 @@ const CaseReviewPage = lazy(() => import('../pages/case/CaseReview/CaseReviewPag
 // Lazy-loaded medical intake report view
 const MedicalReportPage = lazy(() => import('../pages/case/MedicalReport/MedicalReportPage'));
 
+// Lazy-loaded notification center
+const NotificationsPage = lazy(() => import('../pages/notifications/NotificationsPage'));
+
 /**
  * Route wrapper that redirects already-authenticated users directly to their workspace
  */
@@ -47,6 +50,24 @@ function PublicOnlyRoute({ children }) {
     return <Navigate to={target} replace />;
   }
   return children;
+}
+
+/**
+ * Dynamic redirect to role-specific notification center
+ */
+function NotificationRedirect() {
+  const { user } = useAuth();
+  const isPro = user?.role === 'PROFESSIONAL' || user?.role === 'ADMIN';
+  return <Navigate to={isPro ? '/professional/notifications' : '/patient/notifications'} replace />;
+}
+
+/**
+ * Dynamic redirect to role-specific profile page
+ */
+function ProfileRedirect() {
+  const { user } = useAuth();
+  const isPro = user?.role === 'PROFESSIONAL' || user?.role === 'ADMIN';
+  return <Navigate to={isPro ? '/professional/profile' : '/patient/profile'} replace />;
 }
 
 export default function AppRoutes() {
@@ -87,6 +108,24 @@ export default function AppRoutes() {
         <Route path="/signup" element={<Navigate to="/sign-up" replace />} />
         <Route path="/dashboard" element={<Navigate to="/patient/dashboard" replace />} />
 
+        {/* Global Authenticated Redirects */}
+        <Route
+          path="/notifications"
+          element={
+            <ProtectedRoute>
+              <NotificationRedirect />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <ProfileRedirect />
+            </ProtectedRoute>
+          }
+        />
+
         {/* ── Patient Workspace Routes (Requires PATIENT role) ──────── */}
         <Route
           path="/patient"
@@ -100,6 +139,7 @@ export default function AppRoutes() {
         >
           <Route index element={<Navigate to="/patient/dashboard" replace />} />
           <Route path="dashboard" element={<PatientDashboard />} />
+          <Route path="notifications" element={<NotificationsPage />} />
           <Route path="consultation" element={<PatientConsultation />} />
           <Route path="consultation/:conversationId" element={<PatientConsultation />} />
           <Route path="cases" element={<PatientCases />} />
@@ -125,6 +165,7 @@ export default function AppRoutes() {
         >
           <Route index element={<Navigate to="/professional/dashboard" replace />} />
           <Route path="dashboard" element={<ProfessionalDashboard />} />
+          <Route path="notifications" element={<NotificationsPage />} />
           <Route path="queue" element={<ProfessionalQueue />} />
           <Route path="cases" element={<ProfessionalCases />} />
           <Route path="cases/:caseId" element={<CaseReviewPage role="professional" />} />

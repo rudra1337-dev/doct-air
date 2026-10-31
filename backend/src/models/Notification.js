@@ -8,6 +8,11 @@ const notificationSchema = new mongoose.Schema(
       required: [true, 'User ID is required'],
       index: true,
     },
+    role: {
+      type: String,
+      enum: ['PATIENT', 'PROFESSIONAL', 'ADMIN', 'all'],
+      default: 'all',
+    },
     title: {
       type: String,
       required: [true, 'Title is required'],
@@ -23,10 +28,15 @@ const notificationSchema = new mongoose.Schema(
     type: {
       type: String,
       enum: {
-        values: ['case_update', 'report_published', 'triage_alert', 'general'],
+        values: ['case_update', 'report_published', 'triage_alert', 'clinical_alert', 'general', 'system'],
         message: '{VALUE} is not a valid notification type',
       },
       default: 'general',
+    },
+    link: {
+      type: String,
+      default: null,
+      trim: true,
     },
     caseId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -49,12 +59,34 @@ const notificationSchema = new mongoose.Schema(
   }
 );
 
+// Virtual alias for recipient <-> userId
+notificationSchema.virtual('recipient')
+  .get(function () {
+    return this.userId;
+  })
+  .set(function (val) {
+    this.userId = val;
+  });
+
+// Virtual alias for read <-> isRead
+notificationSchema.virtual('read')
+  .get(function () {
+    return this.isRead;
+  })
+  .set(function (val) {
+    this.isRead = val;
+  });
+
 notificationSchema.index({ userId: 1, isRead: 1, createdAt: -1 });
 
 notificationSchema.set('toJSON', {
+  virtuals: true,
   transform: (_doc, ret) => {
     ret.id = ret._id.toString();
     ret.userId = ret.userId?.toString();
+    ret.recipient = ret.userId;
+    ret.read = Boolean(ret.isRead);
+    ret.isRead = Boolean(ret.isRead);
     if (ret.caseId) ret.caseId = ret.caseId.toString();
     if (ret.conversationId) ret.conversationId = ret.conversationId.toString();
     delete ret._id;

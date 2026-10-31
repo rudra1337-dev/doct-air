@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-export const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const rawBaseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+export const BASE_URL = rawBaseUrl.trim().replace(/\/+$/, '');
 
 /**
  * Pre-configured Axios instance for DoctAir API requests
@@ -14,6 +15,9 @@ export const apiClient = axios.create({
     Accept: 'application/json',
   },
 });
+
+// Enforce withCredentials globally on all requests
+apiClient.defaults.withCredentials = true;
 
 // Response interceptor to unwrap data and normalize errors consistently
 apiClient.interceptors.response.use(

@@ -41,6 +41,75 @@ const userSchema = new mongoose.Schema(
       type: Date,
       default: null,
     },
+    // Extended Patient & Clinical Profile Fields
+    phone: {
+      type: String,
+      default: '',
+      trim: true,
+    },
+    dateOfBirth: {
+      type: String,
+      default: '',
+      trim: true,
+    },
+    gender: {
+      type: String,
+      default: '',
+      trim: true,
+    },
+    bloodGroup: {
+      type: String,
+      default: '',
+      trim: true,
+    },
+    address: {
+      type: String,
+      default: '',
+      trim: true,
+    },
+    emergencyContact: {
+      name: { type: String, default: '' },
+      phone: { type: String, default: '' },
+      relationship: { type: String, default: '' },
+    },
+    allergies: {
+      type: [String],
+      default: [],
+    },
+    chronicConditions: {
+      type: [String],
+      default: [],
+    },
+    // Healthcare Professional specific fields
+    specialty: {
+      type: String,
+      default: '',
+      trim: true,
+    },
+    licenseNumber: {
+      type: String,
+      default: '',
+      trim: true,
+    },
+    qualifications: {
+      type: String,
+      default: '',
+      trim: true,
+    },
+    hospitalAffiliation: {
+      type: String,
+      default: '',
+      trim: true,
+    },
+    department: {
+      type: String,
+      default: '',
+      trim: true,
+    },
+    yearsOfExperience: {
+      type: Number,
+      default: null,
+    },
   },
   {
     timestamps: true,
@@ -61,6 +130,20 @@ userSchema.methods.toSafeObject = function () {
     email: this.email,
     role: this.role,
     isActive: this.isActive,
+    phone: this.phone || '',
+    dateOfBirth: this.dateOfBirth || '',
+    gender: this.gender || '',
+    bloodGroup: this.bloodGroup || '',
+    address: this.address || '',
+    emergencyContact: this.emergencyContact || { name: '', phone: '', relationship: '' },
+    allergies: this.allergies || [],
+    chronicConditions: this.chronicConditions || [],
+    specialty: this.specialty || '',
+    licenseNumber: this.licenseNumber || '',
+    qualifications: this.qualifications || '',
+    hospitalAffiliation: this.hospitalAffiliation || '',
+    department: this.department || '',
+    yearsOfExperience: this.yearsOfExperience ?? null,
     lastLoginAt: this.lastLoginAt,
     createdAt: this.createdAt,
     updatedAt: this.updatedAt,

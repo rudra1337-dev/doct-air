@@ -1674,3 +1674,130 @@
 .chat-bubble--user .chat-bubble-text {
   color: #ffffff !important;
 }
+
+/* ── Dark Mode Overrides for Patient Consultation ────────────── */
+.dark .consultation-page {
+  background: #0b1120;
+}
+
+.dark .chat-sidebar {
+  background: #0f172a;
+  border-right-color: #1e293b;
+}
+
+.dark .chat-sidebar__header {
+  border-bottom-color: #1e293b;
+}
+
+.dark .chat-sidebar__new-btn {
+  background: rgba(20, 184, 166, 0.15);
+  border-color: rgba(20, 184, 166, 0.35);
+  color: #2dd4bf;
+}
+
+.dark .chat-sidebar__new-btn:hover {
+  background: rgba(20, 184, 166, 0.25);
+  color: #5eead4;
+}
+
+.dark .chat-sidebar__item {
+  color: #94a3b8;
+}
+
+.dark .chat-sidebar__item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #f8fafc;
+}
+
+.dark .chat-sidebar__item--active {
+  background: rgba(20, 184, 166, 0.15);
+  border-color: rgba(20, 184, 166, 0.4) !important;
+  color: #2dd4bf !important;
+}
+
+.dark .chat-main {
+  background: #0b1120;
+}
+
+.dark .chat-main__header {
+  background: rgba(15, 23, 42, 0.95);
+  border-bottom-color: #1e293b;
+}
+
+.dark .chat-main__title {
+  color: #f8fafc;
+}
+
+.dark .chat-sidebar-toggle-btn {
+  border-color: #334155;
+  color: #94a3b8;
+}
+
+.dark .chat-bubble--assistant {
+  background: rgba(30, 41, 59, 0.9);
+  border-color: rgba(51, 65, 85, 0.9);
+  color: #f1f5f9;
+  box-shadow: 0 4px 14px -2px rgba(0, 0, 0, 0.3);
+}
+
+.dark .chat-bubble--user {
+  background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
+  color: #ffffff;
+}
+
+.dark .chat-input-wrapper {
+  background: rgba(11, 17, 32, 0.95);
+  border-top-color: #1e293b;
+}
+
+.dark .chat-input-container {
+  background: #1e293b;
+  border-color: #334155;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.dark .chat-input-container:focus-within {
+  border-color: #14b8a6;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(20, 184, 166, 0.25);
+}
+
+.dark .chat-input-textarea {
+  color: #f8fafc;
+}
+
+.dark .chat-input-textarea::placeholder {
+  color: #64748b;
+}
+
+.dark .welcome-suggestion,
+.dark .suggestion-chip {
+  background: rgba(30, 41, 59, 0.8);
+  border-color: rgba(51, 65, 85, 0.8);
+  color: #f1f5f9;
+}
+
+.dark .welcome-suggestion:hover,
+.dark .suggestion-chip:hover {
+  background: rgba(30, 41, 59, 1);
+  border-color: #14b8a6;
+}
+
+.dark .welcome-suggestion__title,
+.dark .suggestion-chip__title {
+  color: #f8fafc;
+}
+
+.dark .welcome-suggestion__desc,
+.dark .suggestion-chip__desc {
+  color: #94a3b8;
+}
+
+.dark .chat-empty-state h3,
+.dark .chat-welcome h1 {
+  color: #f8fafc;
+}
+
+.dark .chat-empty-state p,
+.dark .chat-welcome p {
+  color: #94a3b8;
+}
